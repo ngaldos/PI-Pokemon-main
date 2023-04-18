@@ -22,29 +22,29 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     health: {
-      type: DataTypes.REAL,
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
     attack: {
-      type: DataTypes.REAL,
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
     defense: {
-      type: DataTypes.REAL,
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
     speed: {
-      type: DataTypes.REAL,
+      type: DataTypes.INTEGER,
     },
     size: {
-      type: DataTypes.REAL,
+      type: DataTypes.INTEGER,
     },
     weight: {
-      type: DataTypes.REAL,
+      type: DataTypes.INTEGER,
     },
     type: {
       type: DataTypes.STRING,
-      allowNull: false,
+      //allowNull: false,
       foreingKey: true,
     }
   },{timestamps : false});

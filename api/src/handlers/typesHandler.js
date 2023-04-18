@@ -1,4 +1,4 @@
-const { createTypeDB } = require('../controllers/typesControllers');
+const { createTypeDB, getTypeDB, getTypes } = require('../controllers/typesControllers');
 
 const createTypeHandler = async (req, res)=>{
     const {name} = req.body;
@@ -10,9 +10,9 @@ const createTypeHandler = async (req, res)=>{
     }
 }
 
-const getTypeHandler = (req, res)=>{
+const getTypeHandler = async (req, res)=>{
     try{
-        const types =  getTypeDB();
+        const types =  await getTypes();
         res.status(200).json(types);
     }catch(error){
         res.status(400).json({error: error.message});    

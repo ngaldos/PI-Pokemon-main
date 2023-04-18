@@ -1,4 +1,5 @@
 const {Type} = require('../db');
+const axios = require('axios');
 
 const createTypeDB = async (name)=>{
     if (!name){
@@ -8,8 +9,19 @@ const createTypeDB = async (name)=>{
         return newType
     }
 }
-const getTypeDB = async ()=>{
+
+const getTypes = async ()=>{
+    try{
+        const response = await axios.get(`https://pokeapi.co/api/v2/type/`).then(data=> data.data)
+        return response;
+    }catch(error){
+        throw new Error ('Invalid URL');
+    }
+
+}
+
+const getTypeDB = async ()=>{ //Pendiente...................
     return 0;
 }
 
-module.exports = { createTypeDB, getTypeDB};
+module.exports = { createTypeDB, getTypeDB, getTypes };

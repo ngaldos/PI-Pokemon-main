@@ -1,10 +1,11 @@
 const { Router } = require('express');
 const {createTypeHandler, getTypeHandler} = require('../handlers/typesHandler');
+
+
 const router = Router();
+router.post('/', createTypeHandler);
+router.get('/', getTypeHandler);
+//router.get('/', );
 
-const routesTypes = (req, res)=>{
-    router.post('/', createTypeHandler);
-    router.get('/', getTypeHandler);
-}
 
-module.exports = routesTypes;
+module.exports = router;
