@@ -1,4 +1,5 @@
 //import {Link} from 'react-router-dom';
+import style from './card.module.css';
 
 export default function Card({name, img, health, attack, defense, type}){
     if (!name || !img || !health || !attack || !defense || !type){
@@ -6,7 +7,7 @@ export default function Card({name, img, health, attack, defense, type}){
     }else{
         return(
             <div>
-            <img src={img} alt='Pokemon Img'/>
+            <img src={img} alt={style.img}/>
             <h3>Pokemon: {name}</h3>
             <h2>Type: {type}</h2>
             <h2>Health: {health}</h2>
