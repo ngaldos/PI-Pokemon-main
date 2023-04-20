@@ -9,9 +9,15 @@ const createPokemonDB = async (name, img, health, attack, defense, speed, size, 
 const getPokemons = async ()=>{
     try{
         const pokemons = await axios.get(`https://pokeapi.co/api/v2/pokemon`).then(data=> data.data)
+        console.log(pokemons);
+        /*const aux = pokemons.map(async (e)=>{
+            pokeInfo= await axios.get(e.url).then(data=>data.data)
+            const response = {name, img, health, attack, defense, speed, size, weight} = pokeInfo;
+            return (response);
+        });*/
         return pokemons;
     }catch(error){
-        res.status(400).json({error: error.message});
+       throw new Error('Algo paso, no se que..');
     }
 }
 
