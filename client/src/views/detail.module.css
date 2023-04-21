@@ -1,0 +1,17 @@
+.higher{
+    background-image: url('https://wallpapercosmos.com/w/full/f/6/f/1193592-3840x2160-desktop-4k-gengar-background-image.jpg');
+    background-attachment:fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    height:100dvh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: 25px;
+    
+}
+.text{
+    padding-right: 50%;
+}
