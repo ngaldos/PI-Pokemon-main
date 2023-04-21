@@ -23,9 +23,14 @@ const getPokemonsHandler =  async (req, res)=>{
 
 const getPokemonByIdHandler = async (req, res)=>{
     const {id} = req.params;
-    if (!id) throw new Error ('Invalid ID x2');
+    if (!id) throw new Error ('Invalid ID (Ctrl)');
     else{
         try{
+            if (isNaN(id)){ // Si es NaN ==> Es de la base de datos
+
+            }else{ // Si no se busca en la API normalmente
+
+            }
             const response = await getPokemonById(id);
             res.status(200).json(response);
         }catch(error){

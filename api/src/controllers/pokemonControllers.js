@@ -7,31 +7,50 @@ const createPokemonDB = async (name, img, health, attack, defense, speed, size, 
 }
 
 const getPokemons = async ()=>{
+    const info = await axios.get(`https://pokeapi.co/api/v2/pokemon`).then(data=>data.data.results)
     try{
-        const pokemons = (await axios.get(`https://pokeapi.co/api/v2/pokemon`)).data
-        //console.log(pokemons.results);
-        const aux = pokemons.results.map(async (e)=>{
-            const URL = e.url;
-            let name = e.name;
-            const pokeInfo= (await axios.get(URL)).data
-            const {img, health, attack, defense, speed, size, weight} = pokeInfo;
-            //console.log(name);
-            //console.log(health);
-            //const response = {img, health, attack, defense, speed, size, weight} = pokeInfo;
-            //return (name, img, health, attack, defense, speed, size, weight);
-            return (name);
-        });
-        console.log(aux);
-        return aux;
+        const coso = info.map((e)=>axios.get(e.url))
+        let promesas = Promise.all(coso)
+        .then(e=>{
+            const pokemon = e.map(p=> p.data)
+            const array= [];
+            pokemon.forEach((p)=>{
+                array.push({
+                    id: p.id,
+                    name: p.name,
+                    image: p.sprites.other.home.front_default,
+                    health: p.stats[0].base_stat,
+                    attack: p.stats[1].base_stat,
+                    defense: p.stats[2].base_stat,
+                    speed: p.stats[5].base_stat,
+                    height: p.height,
+                    weight: p.weight,
+                });
+            });
+                return array;
+        })
+        return promesas;
     }catch(error){
-       throw new Error('Algo paso, no se que..');
+       throw new Error('Error getting all pokemons');
     }
 }
 
 const getPokemonById = async (id)=>{
+    const p= await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`).then(data=> data.data)
     try{
-        const response= await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`).then(data=> data.data)
-        return response;
+        const array = [];
+        const pokemon = {
+            id: p.id,
+            name: p.name,
+            image: p.sprites.other.home.front_default,
+            health: p.stats[0].base_stat,
+            attack: p.stats[1].base_stat,
+            defense: p.stats[2].base_stat,
+            speed: p.stats[5].base_stat,
+            height: p.height,
+            weight: p.weight,
+        };
+        return pokemon;
     }catch(error){
         throw new Error('Invalid ID');
     }
