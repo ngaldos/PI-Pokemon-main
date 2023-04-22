@@ -36,16 +36,11 @@ module.exports = (sequelize) => {
     speed: {
       type: DataTypes.INTEGER,
     },
-    size: {
+    height: {
       type: DataTypes.INTEGER,
     },
     weight: {
       type: DataTypes.INTEGER,
-    },
-    type: {
-      type: DataTypes.STRING,
-      //allowNull: false,
-      foreingKey: true,
     }
   },{timestamps : false});
 };

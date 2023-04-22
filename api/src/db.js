@@ -43,11 +43,11 @@ const { Pokemon, Type } = sequelize.models;
 
 // Aca vendrian las relaciones
 
+Pokemon.belongsToMany(Type, {through: 'PokemonType'});
+Type.belongsToMany(Pokemon, {through: 'PokemonType'});
 
 //Pokemon.hasOne(Type);
 //Type.hasMany(Pokemon);
-Pokemon.belongsToMany(Type, {through: 'PokemonType'});
-Type.belongsToMany(Pokemon, {through: 'PokemonType'});
 
 
 // Product.hasMany(Reviews);

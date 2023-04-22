@@ -4,35 +4,33 @@ const {createPokemonDB, getPokemonById, getPokemons} = require('../controllers/p
 
 const getPokemonsHandler =  async (req, res)=>{
     const {name} = req.query;
-    if (!name){
-        try{
+    try{
+        if (!name){
             const pokemons = await getPokemons();
             res.status(200).json(pokemons);
-        }catch(error){
-            res.status(400).json({error: error.message});
-        }
-    }else{
-        try{
-            const response = await getPokemonById(name.toLowerCase());
+        }else{
+            const response = await getPokemonById(name.toLowerCase(), 'all'); //Busco la query
             res.status(200).json(response);
-        }catch(error){
-            res.status(404).json({error: error.message});
         }
+    }catch(error){
+        res.status(404).json({error: error.message});
     }
  }
-
 const getPokemonByIdHandler = async (req, res)=>{
     const {id} = req.params;
-    if (!id) throw new Error ('Invalid ID (Ctrl)');
+    if (!id) throw new Error ('Invalid ID (Handler)');
     else{
         try{
-            if (isNaN(id)){ // Si es NaN ==> Es de la base de datos
-
+            if (isNaN(id)){ // Si es NaN ==> Es de la base de datos o un nombre
+                const response = await getPokemonById(id, 'bdd');
+                if (response == null){
+                    throw new Error('The ID dosent exits in the Data Base');
+                }else{
+                res.status(200).json(response);}
             }else{ // Si no se busca en la API normalmente
-
+                const response = await getPokemonById(id, 'api');
+                res.status(200).json(response);
             }
-            const response = await getPokemonById(id);
-            res.status(200).json(response);
         }catch(error){
             res.status(404).json({error: error.message});
         }
@@ -40,9 +38,10 @@ const getPokemonByIdHandler = async (req, res)=>{
 }
 
 const createPokemonHandler = async (req, res)=>{
-    const {name, img, health, attack, defense, speed, size, weight} = req.body;
+    const {name, img, health, attack, defense, speed, size, weight, type, height} = req.body;
+    
     try{
-        const response= await createPokemonDB(name, img, health, attack, defense, speed, size, weight);
+        const response= await createPokemonDB(name.toLowerCase(), img, health, attack, defense, speed, size, weight, type, height);
         res.status(200).json(response);
     }catch (error){
         res.status(400).json({error: error.message});

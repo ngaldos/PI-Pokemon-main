@@ -11,13 +11,26 @@ const createTypeDB = async (name)=>{
 }
 
 const getTypes = async ()=>{
-    try{
-        const response = await axios.get(`https://pokeapi.co/api/v2/type/`).then(data=> data.data)
-        return response;
-    }catch(error){
-        throw new Error ('Invalid URL');
+    const aux= await Type.findAll();
+    if (aux.length){
+        return aux;
+    }else{
+        try{
+            const response = await axios.get(`https://pokeapi.co/api/v2/type/`).then(data=> data.data.results)
+            const array = [];
+            let i= 1;
+            response.forEach(e => {
+                Type.create({name: e.name});
+                array.push({id: i, name: e.name});
+                i++;
+            });
+            //Type.create(); 
+            return array;
+        }catch(error){
+            throw new Error ('Invalid URL');
+        }
+        
     }
-
 }
 
 const getTypeDB = async ()=>{ //Pendiente...................

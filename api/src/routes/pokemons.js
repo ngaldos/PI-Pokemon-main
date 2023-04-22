@@ -7,6 +7,8 @@ const router= Router();
 
 router.get('/', getPokemonsHandler);
 
+//router.get('/?name', getPokemonByNameHandler);
+
 router.get('/:id', getPokemonByIdHandler);
 
 

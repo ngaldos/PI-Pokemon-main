@@ -1,20 +1,23 @@
 import style from './home.module.css';
-import Card from '../components/card/card';
 import Nav from '../components/nav/nav';
+
 
 import axios from 'axios';
 
 
 
 
-const Home =  ()=>{
+const Home = ()=>{
+    //const pokeInfo = await getPokemonById(5);
+    //const pokeInfo = axios.get(`localhost:3001/pokemons/5`).then(data=>data.data)
+    //console.log(pokeInfo);
     return(
         <div className={style.home}>
-        <Nav/>
+            <Nav/>
                 <div >
-                <h1>Pokemon Henry</h1>
-            
-            </div>
+                    <h1>Pokemon Henry</h1>
+                    
+                </div>
         </div>
     );
 }
