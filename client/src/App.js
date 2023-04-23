@@ -4,10 +4,10 @@ import axios from 'axios';
 
 import Card from './components/card/card';
 
-import Landing from './views/landing';
-import About from './views/about';
-import Detail from './views/detail';
-import Home from './views/home';
+import Landing from './views/landing/landing';
+import About from './views/about/about';
+import Detail from './views/detail/detail';
+import Home from './views/home/home';
 
 
 const URL_BASE= 'localhost:3001';

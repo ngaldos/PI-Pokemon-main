@@ -1,5 +1,5 @@
 import style from './about.module.css';
-import Nav from '../components/nav/nav';
+import Nav from '../../components/nav/nav';
 
 const About = ()=>{
     return (

@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 import style from './detail.module.css';
-import Nav from '../components/nav/nav';
+import Nav from '../../components/nav/nav';
 import { useParams } from 'react-router-dom';
 
 const Detail = (props)=>{
