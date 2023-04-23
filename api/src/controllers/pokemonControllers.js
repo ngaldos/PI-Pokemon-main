@@ -34,8 +34,9 @@ try {
 
 
 const getPokemons = async ()=>{
-    const info = await axios.get(`https://pokeapi.co/api/v2/pokemon`).then(data=>data.data.results)
     const pokeDb = await Pokemon.findAll();
+    
+    const info = await axios.get(`https://pokeapi.co/api/v2/pokemon`).then(data=>data.data.results)
     try{
         const coso = info.map((e)=>axios.get(e.url))
         let promesas = Promise.all(coso)
@@ -87,24 +88,25 @@ const getPokemonById = async (id, src)=>{
             if (src === 'all'){ // ID es una query
                 const pokeAPI = infoCleaner (await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`).then((data)=>data.data));
                 try{
-                    //const pokeDb= await Pokemon.findOne({ where:{ name: id }});
-                    const pokeDb= await Pokemon.findOne({
+                    const pokeDb= pokeDb= await Pokemon.findOne({
                         where: {name: id}
                     });
+                    //const pokeDb= await Pokemon.findOne({ where:{ name: id }});
+                    console.log(!!pokeDb);
+                    console.log(!!pokeAPI);
+                    console.log('*******************************');
+                    console.log(pokeDb);
                     if (pokeAPI && pokeDb){
-                        console.log('1');
                         return [pokeDb, pokeAPI];
-                    }
-                    if (pokeAPI && !pokeDb){
-                        console.log('2');
+                    }else if (pokeAPI && !pokeDb){
                         return pokeAPI
                     }
-                    if (pokeDb){
-                        console.log('3');
+                    else if (!!pokeDb && !pokeAPI){
                         return pokeDb.dataValues;
-                    }else console.log('wtf');
+                    }
                     
                 }catch(error){throw new Error('Invalid ID {CTRL}')}
+
             }else{ // Si src ==> 'bdd' || otra cosa !== de UNDEFINED
                 const p= await Pokemon.findByPk(id);
                 return p;

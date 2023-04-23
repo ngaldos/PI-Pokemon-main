@@ -1,6 +1,6 @@
 import style from './home.module.css';
 import Nav from '../components/nav/nav';
-
+import Form from '../components/form/form';
 
 import axios from 'axios';
 
@@ -16,7 +16,7 @@ const Home = ()=>{
             <Nav/>
                 <div >
                     <h1>Pokemon Henry</h1>
-                    
+                    <Form/>
                 </div>
         </div>
     );
