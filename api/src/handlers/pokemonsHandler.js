@@ -13,6 +13,7 @@ const getPokemonsHandler =  async (req, res)=>{
             res.status(200).json(response);
         }
     }catch(error){
+        console.log(error);
         res.status(404).json({error: error.message});
     }
  }
@@ -21,7 +22,7 @@ const getPokemonByIdHandler = async (req, res)=>{
     if (!id) throw new Error ('Invalid ID (Handler)');
     else{
         try{
-            if (isNaN(id)){ // Si es NaN ==> Es de la base de datos o un nombre
+            if (isNaN(id)){ // Si es NaN ==> Es de la base de datos
                 const response = await getPokemonById(id, 'bdd');
                 if (response == null){
                     throw new Error('The ID dosent exits in the Data Base');

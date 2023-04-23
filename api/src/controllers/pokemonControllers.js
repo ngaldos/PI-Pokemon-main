@@ -44,17 +44,7 @@ const getPokemons = async ()=>{
             const pokemon = e.map(p=> p.data)
             const array= [];
             pokemon.forEach((p)=>{
-                array.push({
-                    id: p.id,
-                    name: p.name,
-                    img: p.sprites.other.home.front_default,
-                    health: p.stats[0].base_stat,
-                    attack: p.stats[1].base_stat,
-                    defense: p.stats[2].base_stat,
-                    speed: p.stats[5].base_stat,
-                    height: p.height,
-                    weight: p.weight,
-                });
+                array.push(infoCleaner(p));
             });
                 //array.push(...pokeDb);
                 return [...pokeDb, ...array];
@@ -67,15 +57,15 @@ const getPokemons = async ()=>{
 
 const infoCleaner = (p)=>{
     return ({
-                id: p.id,
-                name: p.name,
-                img: p.sprites.other.home.front_default,
-                health: p.stats[0].base_stat,
-                attack: p.stats[1].base_stat,
-                defense: p.stats[2].base_stat,
-                speed: p.stats[5].base_stat,
-                height: p.height,
-                weight: p.weight,
+                id: p?.id,
+                name: p?.name,
+                img: p?.sprites?.other?.home?.front_default,
+                health: p?.stats?.[0]?.base_stat,
+                attack: p?.stats?.[1]?.base_stat,
+                defense: p?.stats?.[2]?.base_stat,
+                speed: p?.stats?.[5]?.base_stat,
+                height: p?.height,
+                weight: p?.weight,
             });
 }
 
@@ -86,27 +76,35 @@ const getPokemonById = async (id, src)=>{
         }catch (error) {throw new Error('Invalid ID {CTRL}')}
         }else{
             if (src === 'all'){ // ID es una query
-                const pokeAPI = infoCleaner (await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`).then((data)=>data.data));
-                try{
-                    const pokeDb= pokeDb= await Pokemon.findOne({
-                        where: {name: id}
-                    });
-                    //const pokeDb= await Pokemon.findOne({ where:{ name: id }});
-                    console.log(!!pokeDb);
-                    console.log(!!pokeAPI);
-                    console.log('*******************************');
-                    console.log(pokeDb);
-                    if (pokeAPI && pokeDb){
-                        return [pokeDb, pokeAPI];
-                    }else if (pokeAPI && !pokeDb){
-                        return pokeAPI
-                    }
-                    else if (!!pokeDb && !pokeAPI){
-                        return pokeDb.dataValues;
-                    }
-                    
-                }catch(error){throw new Error('Invalid ID {CTRL}')}
+                /*const array = [];
+                pokes = (await getPokemons()).forEach((e)=>{
+                    if (e.name === id) array.push(e);
+                });
+                if (array.length == 1) return array[0]
+                else if (array.length !== 0) return array;
+                else throw new Error('The Pokemon dosent exist');*/
 
+                //const pokeDb= await Pokemon.findOne({ where:{ name: id }});
+                const pokeDb= await Pokemon.findOne({
+                    where: {name: id}
+                });
+                const pokeAPI = infoCleaner (await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`)
+                .then((data)=>{ 
+                    console.log(data.data);
+                    return data.data
+                    
+                }).catch(error=> {}))
+                if (pokeAPI !== false && pokeDb){
+                    return [pokeDb, pokeAPI];
+                }else if (pokeAPI && !pokeDb){
+                    return pokeAPI
+                }
+                else if (pokeDb && !pokeAPI){
+                    return pokeDb.dataValues;
+                }else{
+                    throw new Error('Fallo todo');
+                }
+                
             }else{ // Si src ==> 'bdd' || otra cosa !== de UNDEFINED
                 const p= await Pokemon.findByPk(id);
                 return p;
