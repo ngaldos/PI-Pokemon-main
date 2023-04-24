@@ -89,10 +89,8 @@ const getPokemonById = async (id, src)=>{
                     where: {name: id}
                 });
                 const pokeAPI = infoCleaner (await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`)
-                .then((data)=>{ 
-                    console.log(data.data);
+                .then((data)=>{
                     return data.data
-                    
                 }).catch(error=> {}))
                 if (pokeAPI !== false && pokeDb){
                     return [pokeDb, pokeAPI];

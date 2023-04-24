@@ -1,29 +1,43 @@
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { getDetail } from '../../redux/actions';
 
 import style from './detail.module.css';
 import Nav from '../../components/nav/nav';
-import { useParams } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { cleanDetail } from '../../redux/actions';
 
-const Detail = (props)=>{
+const Detail = ()=>{
+    const dispatch= useDispatch();
+
     const {id} = useParams();
-    const data = axios.get(`localhost:3001/pokemons/${id}`).then(data=>data.data)
-    const {name, img, health, attack, defense, speed, height, weight}= data;
-    console.log(data);
-    
+    //const {name, img, health, attack, defense, speed, height, weight}= data;
+    const detail = useSelector((state)=>state.detail);
+    useEffect(()=>{
+        dispatch(getDetail(id));
+
+        return ()=>{
+            dispatch(cleanDetail());
+        };
+    }, [dispatch]);
+
+
+
     return(
-        <div>
+        <div >
             <Nav/>
             <div className={style.higher}>
-                <img src={img} alt='IMG'/>
                 <div className={style.text}>
-                    <h2>ID: {id}</h2>
-                    <h2>Name: {name}</h2>
-                    <h3>Health: {health}</h3>
-                    <h3>Attack: {attack}</h3>
-                    <h3>Defense: {defense}</h3>
-                    <h3>Speed: {speed}</h3>
-                    <h3>Height: {height}</h3>
-                    <h3>weight: {weight}</h3>
+                    <img src={detail?.img} alt='IMG' className={style.img}/>
+                    <h2>ID: {detail?.id}</h2>
+                    <h2>Name: {detail?.name}</h2>
+                    <h3>Health: {detail?.health}</h3>
+                    <h3>Attack: {detail?.attack}</h3>
+                    <h3>Defense: {detail?.defense}</h3>
+                    <h3>Speed: {detail?.speed}</h3>
+                    <h3>Height: {detail?.height}</h3>
+                    <h3>weight: {detail?.weight}</h3>
                 </div>
             </div>
         </div>

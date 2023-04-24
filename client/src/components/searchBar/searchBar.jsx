@@ -1,14 +1,13 @@
 import { useState } from "react";
 
-export default function SearchBar ({onSearch}){
-    const [id, setId]=useState('');
-    const handleChange = (event)=>{
-        setId(event.target.value);
-    }
+export default function SearchBar ({handleChange, handleSubmit}){
     return (
         <div>
-            <input type='search' onChange={handleChange}/>
-            <button onClick={()=>onSearch(id)}>Buscar</button>
+            <form onChange={handleChange}>
+                <input placeholder="Search" type="search"/>
+                <button type="submit" onClick={handleSubmit}>Buscar</button>
+
+            </form>
         </div>
     );
 }
