@@ -2,14 +2,10 @@
 import style from './card.module.css';
 
 export default function Card({poke}){
-    const {img, name, type} = poke;
-    if (!name || !img){
-        return(<h1>FALTAN DATO PA</h1>)
-    }else{
+    //const {img, name, type} = poke;
         return(
-            <div>
-                <h3>Pokemon: {name}</h3>
-                <img src={img} alt={style.img}/>
+            <div className={style.card_container}>
+                <h3>{poke?.name}</h3>
+                <img className={style.img} src={poke?.img} alt={poke?.name}/>
             </div>
             )}
-        }
