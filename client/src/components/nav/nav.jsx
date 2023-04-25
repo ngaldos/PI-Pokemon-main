@@ -1,8 +1,5 @@
 import {Link} from 'react-router-dom';
 import style from './nav.module.css';
-import Options from '../options/options';
-import searchBar from '../searchBar/searchBar';
-import SearchBar from '../searchBar/searchBar';
 
 export default function (){
     return(
