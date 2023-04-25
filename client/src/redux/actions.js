@@ -3,8 +3,8 @@ import axios from 'axios';
 export const GET_POKEMONS = 'GET_POKEMONS';
 export const GET_BY_NAME = 'GET_BY_NAME';
 export const GET_DETAIL = 'GET_DETAIL';
-export const CLEAN_DETAIL = 'CLEAN_DETAIL'
-export const ADD_POKEMON = 'ADD_POKEMON';
+export const CLEAN_DETAIL = 'CLEAN_DETAIL';
+export const ADD_POKEMON= 'ADD_POKEMON';
 
 export function getPokemons (){
     return async function (dispatch){
@@ -46,6 +46,18 @@ export const cleanDetail = ()=>{
     }
 }
 
-export const addPokemon = (pokemon) =>{
-    return {type: 'ADD_POKEMON', payload: pokemon}
+
+export const addPokemon = (pokemon)=>{
+    
+    return async (dispatch) =>{
+        try {
+            const response= await axios.post(`http://localhost:3001/pokemons/`, pokemon);
+            return dispatch({
+                type: "ADD_POKEMON",
+                payload: response,
+            });
+        } catch (error) {
+            throw new Error('no se');
+        }
+    }
 }

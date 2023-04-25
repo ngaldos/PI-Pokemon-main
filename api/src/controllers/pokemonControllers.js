@@ -2,8 +2,23 @@ const {Pokemon, Types} = require('../db');
 const axios = require('axios');
 //const { ULR_BASE } = Process.env;
 
-const createPokemonDB = async (name, img, health, attack, defense, speed, size, weight, type, height)=>{
-    const newPokemon =  await Pokemon.create({name, img, health, attack, defense, speed, size, weight, type, height});
+const createPokemonDB = async (name, img, health, attack, defense, speed, weight, height)=>{
+    try{
+        const pokeDb= await Pokemon.findOne({where: {name: name}});
+        //const pokeDb= await Pokemon.findOne({where: {name: id}});
+        if (pokeDb){
+            throw new Error ('Pokemon already exists');
+        }else{
+            const newPokemon =  await Pokemon.create({name, img, health, attack, defense, speed, weight, height});
+            //const pokeType = await Type.findAll({where:{name: typesLower}});
+            //create.addType(pokeType);
+            // ! Arreglar el tema de los types
+            return newPokemon;
+        }
+    }catch(error){
+        throw new Error ('Pokemon could not be created');
+    }
+
     //newPokemon.addTypes(type);
     return newPokemon;
 }
@@ -36,7 +51,7 @@ try {
 const getPokemons = async ()=>{
     const pokeDb = await Pokemon.findAll();
     
-    const info = await axios.get(`https://pokeapi.co/api/v2/pokemon`).then(data=>data.data.results)
+    const info = await axios.get(`https://pokeapi.co/api/v2/pokemon?limit=100`).then(data=>data.data.results)
     try{
         const coso = info.map((e)=>axios.get(e.url))
         let promesas = Promise.all(coso)
@@ -92,7 +107,7 @@ const getPokemonById = async (id, src)=>{
                 .then((data)=>{
                     return data.data
                 }).catch(error=> {}))
-                if (pokeAPI !== false && pokeDb){
+                if (pokeAPI && pokeDb){
                     return [pokeDb, pokeAPI];
                 }else if (pokeAPI && !pokeDb){
                     return pokeAPI

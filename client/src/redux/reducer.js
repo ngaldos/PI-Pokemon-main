@@ -26,11 +26,11 @@ function rootReducer (state = initialState, action){
     case CLEAN_DETAIL:
         return{...state, detail: {}}
         
+        
     case ADD_POKEMON:
-        return {
-            ...state,
-            pokemons: [...pokemons, action.payload],
-        };
+        return {...state}
+        
+
         default:
             return state;
     }

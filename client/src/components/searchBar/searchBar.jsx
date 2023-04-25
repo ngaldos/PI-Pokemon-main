@@ -1,11 +1,11 @@
 import { useState } from "react";
 
-export default function SearchBar ({handleChange, handleSubmit}){
+export default function SearchBar ({handleChange, handleSubmit, SearchString}){
     return (
         <div>
             <form onChange={handleChange}>
-                <input placeholder="Search" type="search"/>
-                <button type="submit" onClick={handleSubmit}>Buscar</button>
+                <input placeholder="Search" type="search" value={SearchString}/>
+                <button type="submit" onClick={handleSubmit}>Search</button>
 
             </form>
         </div>

@@ -4,10 +4,10 @@ import Options from '../options/options';
 import searchBar from '../searchBar/searchBar';
 import SearchBar from '../searchBar/searchBar';
 
-export default function ({handleChange, handleSubmit}){
+export default function (){
     return(
         <div>
-            <SearchBar handleChange={handleChange} handleSubmit={handleSubmit}/>
+            
             <div className={style.links}>
                 <Link to= '/'>
                     <p>Landing</p>
@@ -22,7 +22,6 @@ export default function ({handleChange, handleSubmit}){
                     <p>About</p>
                 </Link>
             </div>
-                <Options/>
         </div>
     );
 }

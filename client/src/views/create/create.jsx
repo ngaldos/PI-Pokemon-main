@@ -3,6 +3,8 @@ import style from './create.modules.css';
 import { useDispatch } from "react-redux";
 import { addPokemon } from "../../redux/actions";
 
+import axios from 'axios';
+
 function Create (){
     const dispatch= useDispatch();
     const [input, setInput] = useState({
@@ -37,7 +39,7 @@ function Create (){
 
 
         if (!input.img) errors.img = '*This input must is mandatory.'
-        else if (!/^(ftp|http|https):\/\/[^ "]+$/.test(input.img)){
+        else if (!/.(gif|jpeg|jpg|png)$/i.test(input.img)){
                 errors.img= 'Invalid URL';
         }else errors.img= '';
 
@@ -91,9 +93,9 @@ function Create (){
         ;
     }
     
-    const submitHandler = (event)=>{
+    const submitHandler = async (event)=>{
         event.preventDefault();
-        dispatch(addPokemon(input));
+        dispatch(addPokemon(input))
         alert("Pokemon created sucessfully");
         setInput({
             name: '',
@@ -105,10 +107,12 @@ function Create (){
             height: '',
             weight: ''
         });
+        return;
     }
 
     return (
         <div className={style.higher}>
+            <>
             <form onSubmit={submitHandler}>
                 <div>
                     <label>Name: </label>
@@ -122,36 +126,37 @@ function Create (){
                 </div>
                 <div>
                     <label>Health: </label>
-                    <input type="text" name='health' onChange={handleChange} value={input.value}/>
+                    <input type="number" name='health' onChange={handleChange} value={input.value}/>
                     <span>{error.health}</span>
                 </div>
                 <div>
                     <label>Attack: </label>
-                    <input type="text" name='attack' onChange={handleChange} value={input.value}/>
+                    <input type="number" name='attack' onChange={handleChange} value={input.value}/>
                     <span>{error.attack}</span>
                 </div>
                 <div>
                     <label>Defense: </label>
-                    <input type="text" name='defense' onChange={handleChange} value={input.value}/>
+                    <input type="number" name='defense' onChange={handleChange} value={input.value}/>
                     <span>{error.defense}</span>
                 </div>
                 <div>
                     <label>Speed: </label>
-                    <input type="text" name='speed' onChange={handleChange} value={input.value}/>
+                    <input type="number" name='speed' onChange={handleChange} value={input.value}/>
                     <span>{error.speed}</span>
                 </div>
                 <div>
                     <label>Height: </label>
-                    <input type="text" name='height' onChange={handleChange} value={input.value}/>
+                    <input type="number" name='height' onChange={handleChange} value={input.value}/>
                     <span>{error.height}</span>
                 </div>
                 <div>
                     <label>Weight: </label>
-                    <input type="text" name='weight' onChange={handleChange} value={input.value}/>
+                    <input type="number" name='weight' onChange={handleChange} value={input.value}/>
                     <span>{error.weight}</span>
                 </div>
-                <button type="submit" disabled={error.name || error.img || error.health || error.attack || error.defense || error.speed || error.height || error.weight? true: false}>Submit</button>
+                <button  type="submit" disabled={error.name || error.img || error.health || error.attack || error.defense || error.speed || error.height || error.weight? true: false}>Submit</button>
             </form>
+            </>
         </div>
     );
 }
