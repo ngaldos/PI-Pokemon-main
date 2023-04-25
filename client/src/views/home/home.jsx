@@ -31,9 +31,11 @@ const Home = ()=>{
 
     const handleSubmit = (e)=>{
         e.preventDefault();
-        e.target.value= '';
-        const filtered = allPokemons.filter((pokemon)=>(pokemon.name === searchString.toLowerCase()));
-        setFiltered(filtered);
+        if (searchString !== ''){
+            e.target.value= '';
+            const filtered = allPokemons.filter((pokemon)=>(pokemon.name === searchString.toLowerCase()));
+            setFiltered(filtered);
+        }else setFiltered(allPokemons);
     }
     const handleReset= ()=>{
         console.log('ACA RESETEOO');

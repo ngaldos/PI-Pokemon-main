@@ -6,8 +6,6 @@ import SearchBar from '../searchBar/searchBar';
 
 export default function (){
     return(
-        <div>
-            
             <div className={style.links}>
                 <Link to= '/'>
                     <p>Landing</p>
@@ -22,6 +20,5 @@ export default function (){
                     <p>About</p>
                 </Link>
             </div>
-        </div>
     );
 }
