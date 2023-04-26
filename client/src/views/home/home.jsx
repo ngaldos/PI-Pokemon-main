@@ -18,7 +18,7 @@ import Loader from '../../components/loader/loader.jsx';
 const Home = ()=>{
     const dispatch = useDispatch();
 
-    //const [isLoaded, setIsLoaded] = useState(false)
+    //const [isLoaded, setIsLoaded] = useState(false) 
     const originals = useSelector((state)=> state.originals);
     const allPokemons = useSelector((state)=>state.pokemons);
     const pokemonsCopy = useSelector((state)=>state.pokemonsCopy);
@@ -32,7 +32,6 @@ const Home = ()=>{
     const orderByNameBack = (e)=>{
         e.preventDefault();
         dispatch(orderByNameBackD(originals))
-
     }
     const orderByAttackBack = (e)=>{
         e.preventDefault();
@@ -86,18 +85,22 @@ const Home = ()=>{
             {allPokemons.length > 0 ? 
             <div>
                 <div >
-                    <Nav />
-                    <div className={style.search}>
-                        <SearchBar handleChange={handleChange} handleSubmit={handleSubmit} searchString={searchString}/>
+                    <div className={style.navContainer}>
+                        <Nav />
+                        <div className={style.search}>
+                            <SearchBar handleChange={handleChange} handleSubmit={handleSubmit} searchString={searchString}/>
+                        </div>
+                        <div>
+                            <button onClick={handleReset}>Reset</button>
+                        </div>
+                        <Options filterOwn={filterOwn} 
+                                filterCloud={filterCloud} 
+                                orderByName={orderByName} 
+                                orderByNameBack={orderByNameBack}
+                                orderByAttack={orderByAttack} 
+                                orderByAttackBack={orderByAttackBack}
+                                filterBoth={filterBoth}/>
                     </div>
-                    <button onClick={handleReset}>Reset</button>
-                    <Options filterOwn={filterOwn} 
-                            filterCloud={filterCloud} 
-                            orderByName={orderByName} 
-                            orderByNameBack={orderByNameBack}
-                            orderByAttack={orderByAttack} 
-                            orderByAttackBack={orderByAttackBack}
-                            filterBoth={filterBoth}/>
                     <div className={style.container}>
                         <Cards allPokemons={pokemonsCopy}/>
                     </div>

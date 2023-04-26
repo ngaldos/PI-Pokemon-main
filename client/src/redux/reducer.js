@@ -18,17 +18,11 @@ function rootReducer (state = initialState, action){
         pokemonsCopy: action.payload
     };
     case GET_BY_NAME: 
-    if (action?.payload?.length > 1){
         return{
             ...state,
             pokemonsCopy: action.payload
         };
-    }else{
-        return{
-            ...state,
-            pokemonsCopy: action.payload[0]
-        };
-    }
+    
     case GET_DETAIL: 
     return{
         ...state,
@@ -43,7 +37,7 @@ function rootReducer (state = initialState, action){
         
     case ORDER_BY_NAME:
         return {...state, pokemonsCopy: action.payload, pokemons: action.payload}
-
+    //! los ordenamientos => ordenan el array original (por ende no respeta el filtrado si lo hay)
     case ORDER_BY_NAME_BACKWARDS:
         return {...state, pokemonsCopy: action.payload, pokemons: action.payload}
 
@@ -58,7 +52,7 @@ function rootReducer (state = initialState, action){
         return {...state, pokemonsCopy: action.payload}
     case FILTER_CLOUD: 
         return {...state, pokemonsCopy: action.payload}
-        
+
     case FILTER_BOTH:
         return {...state, pokemonsCopy: action.payload}
         default:

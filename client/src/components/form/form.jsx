@@ -33,31 +33,31 @@ const Form = ()=>{
         const errors= {...error};
 
 
-        if (!input.name) errors.name= '';
+        if (!input.name) errors.name= '*This input is mandatory.';
         else if (!/^[a-zA-Z]+$/.test(input.name)){
             errors.name= 'This input must have only letters';
         }else errors.name= '';
 
 
-        if (!input.img) errors.img = '*This input must is mandatory.'
+        if (!input.img) errors.img = '*This input is mandatory.'
         else if (!/.(gif|jpeg|jpg|png)$/i.test(input.img)){
                 errors.img= 'Invalid URL';
         }else errors.img= '';
 
 
-        if (!input.health) errors.health = '*This input must is mandatory.'
+        if (!input.health) errors.health = '*This input is mandatory.'
         else if (!/^\d+$/.test(input.health)){
             errors.health= 'This input must have only numbers';
         }else errors.health= '';
 
 
-        if (!input.attack) errors.attack = '*This input must is mandatory.'
+        if (!input.attack) errors.attack = '*This input is mandatory.'
         else if (!/^\d+$/.test(input.attack)){
             errors.attack= 'This input must have only numbers';
         }else errors.attack= '';
 
 
-        if (!input.defense) errors.defense = '*This input must is mandatory.'
+        if (!input.defense) errors.defense = '*This input is mandatory.'
         else if (!/^\d+$/.test(input.defense)){
             errors.defense= 'This input must have only numbers';
         }else errors.defense= '';
