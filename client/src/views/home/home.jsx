@@ -27,20 +27,20 @@ const Home = ()=>{
     //! Ordenamientos y filtros
     const orderByName = (e)=>{
         e.preventDefault();
-        dispatch(orderByNameD(allPokemons));
+        dispatch(orderByNameD(originals));
     }
     const orderByNameBack = (e)=>{
         e.preventDefault();
-        dispatch(orderByNameBackD(allPokemons))
+        dispatch(orderByNameBackD(originals))
 
     }
     const orderByAttackBack = (e)=>{
         e.preventDefault();
-        dispatch(orderByAttackBackD(allPokemons));
+        dispatch(orderByAttackBackD(originals));
     }
     const orderByAttack = (e)=>{
         e.preventDefault();
-        dispatch(orderByAttackD(allPokemons));
+        dispatch(orderByAttackD(originals));
     }
     const filterOwn = (e)=>{
         e.preventDefault();
