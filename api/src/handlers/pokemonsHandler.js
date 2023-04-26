@@ -42,9 +42,10 @@ const createPokemonHandler = async (req, res)=>{
     const {name, img, health, attack, defense, speed, weight, height} = req.body;
     try{
         const response= await createPokemonDB(name.toLowerCase(), img, health, attack, defense, speed, weight, height);
-        res.status(200).json(response);
+        res.status(201).json(response);
     }catch (error){
-        res.status(400).json({error: error.message});
+        if (error.message === 'Pokemon already exists') res.status(400).json({error: error.message});
+        else if (error.message === 'Pokemon could not be created') res.status(400).json({error: error.message})
     }
 }
 

@@ -43,6 +43,18 @@ const { Pokemon, Type } = sequelize.models;
 
 // Aca vendrian las relaciones
 
+/*Pokemon.belongsToMany(Type, {
+   through: "pokemon_type",
+   as: "types",
+   //foreignKey: "videogame_id",
+ });
+ Type.belongsToMany(Pokemon,{
+   through: "pokemon_type",
+   as: "pokemons",
+   //foreignKey: "genre_id",
+ });
+*/
+//!
 Pokemon.belongsToMany(Type, {through: 'PokemonType', timeStamps: false});
 Type.belongsToMany(Pokemon, {through: 'PokemonType', timeStamps: false});
 

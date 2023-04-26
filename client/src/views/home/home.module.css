@@ -13,6 +13,20 @@
     justify-content: center;
 }
 
+.none{
+    display: none;
+}
+.block{
+    display: block;
+}
+
+.loader{
+    width: 100dvh;
+    height:100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 @media screen and (min-width: 320px) {
     .container {
         gap: 20px;

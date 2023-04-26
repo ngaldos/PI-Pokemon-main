@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addPokemon, getPokemons} from "../../redux/actions";
-import Nav from '../../components/nav/nav';
 import { useNavigate } from "react-router-dom";
 
 const Form = ()=>{
@@ -89,7 +88,7 @@ const Form = ()=>{
     const submitHandler = async (event)=>{
         event.preventDefault();
         dispatch(addPokemon(input))
-        alert("Pokemon created sucessfully");
+        dispatch(getPokemons());
         setInput({
             name: '',
             img: '',

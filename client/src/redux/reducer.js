@@ -1,7 +1,10 @@
-import { GET_POKEMONS, GET_BY_NAME, GET_DETAIL, CLEAN_DETAIL, ADD_POKEMON} from "./actions";
+import { GET_POKEMONS, GET_BY_NAME, GET_DETAIL, CLEAN_DETAIL, ADD_POKEMON, 
+    ORDER_BY_NAME,ORDER_BY_NAME_BACKWARDS, ORDER_BY_ATTACK, ORDER_BY_ATTACK_BACKWARDS, RESET, FILTER_OWN, FILTER_CLOUD, FILTER_BOTH} from "./actions";
 
 const initialState = {
     pokemons: [],
+    pokemonsCopy: [],
+    originals: [],
     detail: {}
 };
 
@@ -11,13 +14,21 @@ function rootReducer (state = initialState, action){
     return {
         ...state,
         pokemons: action.payload,
+        originals: action.payload,
         pokemonsCopy: action.payload
     };
     case GET_BY_NAME: 
-    return{
-        ...state,
-        pokemons: action.payload
-    };
+    if (action?.payload?.length > 1){
+        return{
+            ...state,
+            pokemonsCopy: action.payload
+        };
+    }else{
+        return{
+            ...state,
+            pokemonsCopy: action.payload[0]
+        };
+    }
     case GET_DETAIL: 
     return{
         ...state,
@@ -30,7 +41,26 @@ function rootReducer (state = initialState, action){
     case ADD_POKEMON:
         return {...state}
         
+    case ORDER_BY_NAME:
+        return {...state, pokemonsCopy: action.payload, pokemons: action.payload}
 
+    case ORDER_BY_NAME_BACKWARDS:
+        return {...state, pokemonsCopy: action.payload, pokemons: action.payload}
+
+    case ORDER_BY_ATTACK:
+        return {...state, pokemonsCopy: action.payload, pokemons: action.payload}
+    
+    case ORDER_BY_ATTACK_BACKWARDS:
+        return {...state, pokemonsCopy: action.payload, pokemons: action.payload}
+    case RESET: 
+        return {...state, pokemonsCopy: action.payload, pokemons: action.payload}
+    case FILTER_OWN: 
+        return {...state, pokemonsCopy: action.payload}
+    case FILTER_CLOUD: 
+        return {...state, pokemonsCopy: action.payload}
+        
+    case FILTER_BOTH:
+        return {...state, pokemonsCopy: action.payload}
         default:
             return state;
     }

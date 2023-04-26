@@ -1,26 +1,59 @@
-const {Pokemon, Types} = require('../db');
+const {Pokemon, Type} = require('../db');
 const axios = require('axios');
 //const { ULR_BASE } = Process.env;
 
 const createPokemonDB = async (name, img, health, attack, defense, speed, weight, height)=>{
     try{
+        
         const pokeDb= await Pokemon.findOne({where: {name: name}});
         //const pokeDb= await Pokemon.findOne({where: {name: id}});
+        
         if (pokeDb){
             throw new Error ('Pokemon already exists');
         }else{
+            if (!speed) speed= 1;
+            if (!weight) weight= 1;
+            if (!height) height= 1;
             const newPokemon =  await Pokemon.create({name, img, health, attack, defense, speed, weight, height});
+            //const typeDb = await Type.findAll({where: {name: type}});
+            //newPokemon.addType= typeDb;
+
+
             //const pokeType = await Type.findAll({where:{name: typesLower}});
             //create.addType(pokeType);
             // ! Arreglar el tema de los types
             return newPokemon;
         }
+
+        /*
+        
+            ({name, 
+                                description, 
+                                image, 
+                                platforms, 
+                                genres, 
+                                released,  
+                                rating, 
+                                createdByUser: true
+            })
+
+            const genresDb = await Genre.findAll({
+                                where: {name: genres}
+            })
+
+            const platformsDb = await Platform.findAll({
+                                where: {name: platforms}
+            })
+
+            newGame.addGenres(genresDb)
+            newGame.addPlatform(platformsDb)
+        */
     }catch(error){
+        console.log(error);
         throw new Error ('Pokemon could not be created');
     }
 
     //newPokemon.addTypes(type);
-    return newPokemon;
 }
 /*
 try {
