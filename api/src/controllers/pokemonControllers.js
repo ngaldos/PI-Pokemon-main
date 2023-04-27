@@ -88,7 +88,7 @@ const getPokemons = async ()=>{
     const info = await axios.get(`https://pokeapi.co/api/v2/pokemon?limit=100`).then(data=>data.data.results)
     try{
         const coso = info.map((e)=>axios.get(e.url))
-        let promesas = Promise.all(coso)
+        let promesses = Promise.all(coso)
         .then(e=>{
             const pokemon = e.map(p=> p.data)
             const array= [];
@@ -98,7 +98,7 @@ const getPokemons = async ()=>{
                 //array.push(...pokeDb);
                 return [...pokeDb, ...array];
         })
-        return promesas;
+        return promesses;
     }catch(error){
        throw new Error('Error getting all pokemons');
     }

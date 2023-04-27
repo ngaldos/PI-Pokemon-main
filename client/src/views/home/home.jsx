@@ -1,8 +1,10 @@
 import style from './home.module.css';
 import Nav from '../../components/nav/nav';
+import Card from '../../components/card/card';
 import Cards from '../../components/cards/cards';
 import SearchBar from '../../components/searchBar/searchBar';
 import Options from '../../components/options/options';
+import Pagination from '../../components/pagination/pagination';
 
 
 import { useEffect, useState } from 'react';
@@ -23,6 +25,15 @@ const Home = ()=>{
     const allPokemons = useSelector((state)=>state.pokemons);
     const pokemonsCopy = useSelector((state)=>state.pokemonsCopy);
     const [searchString, setSearchString]= useState('');
+
+
+    const [currentPage, setCurrentPage] = useState(1); //estado para la pagina actual
+    const [forPage, setForPage] = useState(12); //estado para la cantidad de pokemons por pagina
+
+    const max = allPokemons.length / forPage; //cantidad de paginas
+    const firstIndex = (currentPage - 1) * forPage; //indice del primer pokemon de la pagina
+    const lastIndex = (currentPage - 1) * forPage + forPage; //indice del ultimo pokemon de la pagina
+
 
     //! Ordenamientos y filtros
     const orderByName = (e)=>{
@@ -68,11 +79,14 @@ const Home = ()=>{
     const handleSubmit = (e)=>{
         e.preventDefault();
         if (searchString !== ''){
+            setSearchString('');
+            setCurrentPage(1);
             dispatch(getByName(searchString));
         }else handleReset();
     }
 
     const handleReset= ()=>{
+        setCurrentPage(1);
         dispatch(reset(originals));
     }
 
@@ -88,10 +102,11 @@ const Home = ()=>{
                     <div className={style.navContainer}>
                         <Nav/>
                         <div className={style.search}>
-                            <SearchBar handleChange={handleChange} handleSubmit={handleSubmit} searchString={searchString}/>
+                            <SearchBar handleChange={handleChange} handleSubmit={handleSubmit} 
+                            searchString={searchString} setCurrentPage={setCurrentPage}/>
                         </div>
                         <div>
-                            <button onClick={handleReset}>Reset</button>
+                            <button onClick={handleReset} >Reset</button>
                         </div>
                         <Options filterOwn={filterOwn} 
                                 filterCloud={filterCloud} 
@@ -103,8 +118,13 @@ const Home = ()=>{
                     </div>
                     
                     <div className={style.container}>
-                        <Cards allPokemons={pokemonsCopy}/>
+                    {pokemonsCopy?.slice(firstIndex,lastIndex).map(pokemon => {
+                            return(
+                                <Card poke={pokemon}/>
+                            )} 
+                        )}
                     </div>
+                    <Pagination page={currentPage} setPage={setCurrentPage} maximus={max}/>
                 </div>
                 </div> : <div className={style.loader}>
                     <Loader/>
