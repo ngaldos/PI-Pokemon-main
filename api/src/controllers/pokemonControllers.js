@@ -2,56 +2,28 @@ const {Pokemon, Type} = require('../db');
 const axios = require('axios');
 //const { ULR_BASE } = Process.env;
 
-const createPokemonDB = async (name, img, health, attack, defense, speed, weight, height)=>{
+const createPokemonDB = async (name, img, health, attack, defense, speed, weight, height, types)=>{
     try{
         
         const pokeDb= await Pokemon.findOne({where: {name: name}});
-        //const pokeDb= await Pokemon.findOne({where: {name: id}});
-        
         if (pokeDb){
             throw new Error ('Pokemon already exists.');
         }else{
-                if (!speed) speed= 1;
-                if (!weight) weight= 1;
-                if (!height) height= 1;
+                if (!speed) speed= 0;
+                if (!weight) weight= 0;
+                if (!height) height= 0;
                 const newPokemon =  await Pokemon.create({name, img, health, attack, defense, speed, weight, height});
-                
-                //const typeDb = await Type.findAll({where: {name: type}});
-                //newPokemon.addType= typeDb;
-                
-                
-                //const pokeType = await Type.findAll({where:{name: typesLower}});
-                //create.addType(pokeType);
+                newPokemon.addTypes(types);
+
                 // ! Arreglar el tema de los types
-                return newPokemon;
+                const xd = await Pokemon.findOne({where: {name: name}, include: {model: Type, attributes: ["name"]}, through: { attributes: []}   })
+
+                console.log(xd);
+                return xd;
             }
-
-        /*
-        
-            ({name, 
-                                description, 
-                                image, 
-                                platforms, 
-                                genres, 
-                                released,  
-                                rating, 
-                                createdByUser: true
-            })
-
-            const genresDb = await Genre.findAll({
-                                where: {name: genres}
-            })
-
-            const platformsDb = await Platform.findAll({
-                                where: {name: platforms}
-            })
-
-            newGame.addGenres(genresDb)
-            newGame.addPlatform(platformsDb)
-        */
     }catch(error){
-        console.log(error);
-        throw new Error ('Pokemon could not be created');
+        if (!error.message == 'Pokemon already exists.') 
+            throw new Error ('Pokemon could not be created');
     }
 
     //newPokemon.addTypes(type);
@@ -82,26 +54,50 @@ try {
 
 
 
-const getPokemons = async ()=>{
-    const pokeDb = await Pokemon.findAll();
-    
-    const info = await axios.get(`https://pokeapi.co/api/v2/pokemon?limit=100`).then(data=>data.data.results)
-    try{
-        const coso = info.map((e)=>axios.get(e.url))
-        let promesses = Promise.all(coso)
-        .then(e=>{
-            const pokemon = e.map(p=> p.data)
-            const array= [];
-            pokemon.forEach((p)=>{
-                array.push(infoCleaner(p));
-            });
-                //array.push(...pokeDb);
-                return [...pokeDb, ...array];
-        })
-        return promesses;
-    }catch(error){
-       throw new Error('Error getting all pokemons');
-    }
+
+
+//! GET POKEMONS
+    const getPokemons = async ()=>{
+        
+        pokeDb= await Pokemon?.findAll({include: [{
+            model: Type,
+            attributes: ["name"],
+            through: {attributes: []}
+        }]});
+
+
+        
+        pokeDb = await pokeDb.map((data)=>{
+            return{
+                id: data.dataValues.id,
+                name: data.dataValues.name,
+                image: data.dataValues.img,
+                health: data.dataValues.health,
+                attack: data.dataValues.attack,
+                defense: data.dataValues.defense,
+                speed: data.dataValues.speed,
+                height: data.dataValues.height,
+                weight: data.dataValues.weight,
+                types: data.dataValues.Types.map((t)=>t.name)
+
+            };
+        });
+        const info = await axios.get(`https://pokeapi.co/api/v2/pokemon?limit=100`).then(data=>data.data.results)
+        try{
+            const mappedInfo = info.map((e)=>axios.get(e.url))
+            let promises = Promise.all(mappedInfo)
+            .then(e=>{
+                const pokemon = e.map(p=> p.data)
+                const array= [];
+                pokemon.forEach((p)=>{
+                    array.push(infoCleaner(p));
+                });
+                    return [...pokeDb, ...array];
+            })
+            return promises;
+        }catch(error){
+        throw new Error('Error getting all pokemons');
+        }
 }
 
 const infoCleaner = (p)=>{
@@ -115,6 +111,7 @@ const infoCleaner = (p)=>{
                 speed: p?.stats?.[5]?.base_stat,
                 height: p?.height,
                 weight: p?.weight,
+                types: p?.types?.map((t) => t.type.name)
             });
 }
 
