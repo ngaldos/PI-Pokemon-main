@@ -47,38 +47,38 @@ const Form = ()=>{
 
         if (!input.health) errors.health = '*This input is mandatory.'
         else if (!/^\d+$/.test(input.health)){
-            errors.health= 'This input must have only numbers';
+            errors.health= 'This input must have positive numbers only';
         }else errors.health= '';
 
 
         if (!input.attack) errors.attack = '*This input is mandatory.'
         else if (!/^\d+$/.test(input.attack)){
-            errors.attack= 'This input must have only numbers';
+            errors.attack= 'This input must have positive numbers only';
         }else errors.attack= '';
 
 
         if (!input.defense) errors.defense = '*This input is mandatory.'
         else if (!/^\d+$/.test(input.defense)){
-            errors.defense= 'This input must have only numbers';
+            errors.defense= 'This input must have positive numbers only';
         }else errors.defense= '';
 
 
         //Agregar validaciones de numeros a
         if (!input.speed) errors.speed= '';
         else if (!/^\d+$/.test(input.speed)){
-            errors.speed= 'This input must have only numbers';
+            errors.speed= 'This input must have positive numbers only';
         }else errors.speed= '';
 
 
         if (!input.height) errors.height= '';
         else if (!/^\d+$/.test(input.height)){
-            errors.height= 'This input must have only numbers';
+            errors.height= 'This input must have positive numbers only';
         }else errors.height= '';
 
 
         if (!input.weight) errors.weight= '';
         else if (!/^\d+$/.test(input.weight)){
-            errors.weight= 'This input must have only numbers';
+            errors.weight= 'This input must have positive numbers only';
         }else errors.weight= '';
         
 

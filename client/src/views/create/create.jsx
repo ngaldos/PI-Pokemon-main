@@ -7,10 +7,14 @@ function Create (){
     
     
     return (
-        <div className={style.supra}>
-            <Nav/>
-            <div>
-                <Form/>
+        <div >
+            <div className={style.supra}>
+                <div className={style.nav}>
+                    <Nav/>
+                </div>
+                <div>
+                    <Form/>
+                </div>
             </div>
         </div>
     );

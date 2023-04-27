@@ -15,6 +15,7 @@ const createPokemonDB = async (name, img, health, attack, defense, speed, weight
             if (!weight) weight= 1;
             if (!height) height= 1;
             const newPokemon =  await Pokemon.create({name, img, health, attack, defense, speed, weight, height});
+            
             //const typeDb = await Type.findAll({where: {name: type}});
             //newPokemon.addType= typeDb;
 

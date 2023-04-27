@@ -26,7 +26,9 @@ const Detail = ()=>{
 
     return(
         <div >
-            <Nav/>
+            <div className={style.nav}>
+                <Nav/>
+            </div>
             <div className={style.higher}>
                 <div className={style.text}>
                     <img src={detail?.img} alt='IMG' className={style.img}/>

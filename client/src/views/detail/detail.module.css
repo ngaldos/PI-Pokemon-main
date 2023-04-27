@@ -13,6 +13,15 @@
     font-size: 25px;
     
 }
+.nav{
+    background-color: rgba(24, 214, 214, 0.8);
+    
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    justify-content: center;
+    position: fixed;
+}
 .text{
     display: flex;
     justify-content: center;
@@ -25,5 +34,5 @@
 
 .img{
     width: 80%;
-    
+    padding-top: 50px;
 }

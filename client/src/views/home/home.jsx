@@ -86,7 +86,7 @@ const Home = ()=>{
             <div>
                 <div >
                     <div className={style.navContainer}>
-                        <Nav />
+                        <Nav/>
                         <div className={style.search}>
                             <SearchBar handleChange={handleChange} handleSubmit={handleSubmit} searchString={searchString}/>
                         </div>
@@ -101,10 +101,11 @@ const Home = ()=>{
                                 orderByAttackBack={orderByAttackBack}
                                 filterBoth={filterBoth}/>
                     </div>
+                    
                     <div className={style.container}>
                         <Cards allPokemons={pokemonsCopy}/>
                     </div>
-            </div>
+                </div>
                 </div> : <div className={style.loader}>
                     <Loader/>
                 </div>

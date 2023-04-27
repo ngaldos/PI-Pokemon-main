@@ -3,7 +3,7 @@
     justify-content: space-around;
     flex-direction: row;
     font-size: 30px;
-    
+    padding-bottom: 8px;
 }
 
 .filter{
