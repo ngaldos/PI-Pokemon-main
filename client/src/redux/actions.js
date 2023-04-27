@@ -44,7 +44,6 @@ export function getByName (name){
     return async function (dispatch){
         const response = await axios.get(`http://localhost:3001/pokemons/?name=${name}`).catch(()=>{
             alert('Request failed');
-            throw new Error('Request failed');
         })
         if (Array.isArray(response.data)){
             const aux = response?.data.filter((poke)=>Object.values(poke).length > 0);

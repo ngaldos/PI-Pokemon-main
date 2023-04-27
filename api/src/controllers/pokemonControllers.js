@@ -9,22 +9,22 @@ const createPokemonDB = async (name, img, health, attack, defense, speed, weight
         //const pokeDb= await Pokemon.findOne({where: {name: id}});
         
         if (pokeDb){
-            throw new Error ('Pokemon already exists');
+            throw new Error ('Pokemon already exists.');
         }else{
-            if (!speed) speed= 1;
-            if (!weight) weight= 1;
-            if (!height) height= 1;
-            const newPokemon =  await Pokemon.create({name, img, health, attack, defense, speed, weight, height});
-            
-            //const typeDb = await Type.findAll({where: {name: type}});
-            //newPokemon.addType= typeDb;
-
-
-            //const pokeType = await Type.findAll({where:{name: typesLower}});
-            //create.addType(pokeType);
-            // ! Arreglar el tema de los types
-            return newPokemon;
-        }
+                if (!speed) speed= 1;
+                if (!weight) weight= 1;
+                if (!height) height= 1;
+                const newPokemon =  await Pokemon.create({name, img, health, attack, defense, speed, weight, height});
+                
+                //const typeDb = await Type.findAll({where: {name: type}});
+                //newPokemon.addType= typeDb;
+                
+                
+                //const pokeType = await Type.findAll({where:{name: typesLower}});
+                //create.addType(pokeType);
+                // ! Arreglar el tema de los types
+                return newPokemon;
+            }
 
         /*
         
@@ -141,15 +141,19 @@ const getPokemonById = async (id, src)=>{
                 .then((data)=>{
                     return data.data
                 }).catch(error=> {}))
-                if (pokeAPI && pokeDb){
-                    return [pokeDb, pokeAPI];
-                }else if (pokeAPI && !pokeDb){
-                    return pokeAPI
-                }
-                else if (pokeDb && !pokeAPI){
-                    return pokeDb.dataValues;
+                if (!pokeDb && !pokeAPI) throw new Error('Pokemons by that name has not been found. (1)');
+                else{
+
+                    if (pokeAPI && pokeDb){
+                        return [pokeDb, pokeAPI];
+                    }else if (pokeAPI && !pokeDb){
+                        return pokeAPI
+                    }
+                    else if (pokeDb && !pokeAPI){
+                        return pokeDb.dataValues;
                 }else{
                     throw new Error('Fallo todo');
+                }
                 }
                 
             }else{ // Si src ==> 'bdd' || otra cosa !== de UNDEFINED

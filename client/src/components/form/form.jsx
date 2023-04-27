@@ -3,6 +3,7 @@ import { useDispatch } from "react-redux";
 import { addPokemon, getPokemons} from "../../redux/actions";
 import { useNavigate } from "react-router-dom";
 
+
 const Form = ()=>{
 
     const navigate = useNavigate();
@@ -63,7 +64,6 @@ const Form = ()=>{
         }else errors.defense= '';
 
 
-        //Agregar validaciones de numeros a
         if (!input.speed) errors.speed= '';
         else if (!/^\d+$/.test(input.speed)){
             errors.speed= 'This input must have positive numbers only';
@@ -87,19 +87,24 @@ const Form = ()=>{
 
     const submitHandler = async (event)=>{
         event.preventDefault();
-        dispatch(addPokemon(input))
-        dispatch(getPokemons());
-        setInput({
-            name: '',
-            img: '',
-            health: '',
-            attack: '',
-            defense: '',
-            speed: '',
-            height: '',
-            weight: ''
-        });
-        navigate('/home');
+        try{
+            dispatch(addPokemon(input))
+            dispatch(getPokemons());
+            setInput({
+                name: '',
+                img: '',
+                health: '',
+                attack: '',
+                defense: '',
+                speed: '',
+                height: '',
+                weight: ''
+            });
+            navigate('/home');
+        }catch (error) {
+            console.log(error.status);
+            alert(error.message);
+        }
         return;
     }
 

@@ -35,12 +35,12 @@ const Pagination = ({page, setPage, maximus}) => {
     
     return (
     <div className={styles.container}>
-        <button className={styles.btn} disabled={page <= 1} onClick={prevPage}> <p className={styles.left}></p> </button>
+        <button className={styles.btn} disabled={page <= 1} onClick={prevPage}> <p className={styles.left}>Prev</p> </button>
         &nbsp;
         <input className={styles.cont} onChange={(e) => onChange(e)} onKeyDown={e => keyInput(e)} name="page" autoComplete="off" value={input} />
         <p className={styles.text}> de {Math.ceil(maximus)}</p>
         &nbsp;  
-        <button className={styles.btn2} disabled={page >= Math.ceil(maximus)} onClick={nextPage}><p className={styles.right}></p></button>
+        <button className={styles.btn2} disabled={page >= Math.ceil(maximus)} onClick={nextPage}><p className={styles.right}>Next</p></button>
     </div>
     )
 }

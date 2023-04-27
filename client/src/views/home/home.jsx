@@ -30,7 +30,7 @@ const Home = ()=>{
     const [currentPage, setCurrentPage] = useState(1); //estado para la pagina actual
     const [forPage, setForPage] = useState(12); //estado para la cantidad de pokemons por pagina
 
-    const max = allPokemons.length / forPage; //cantidad de paginas
+    const max = pokemonsCopy.length / forPage; //cantidad de paginas
     const firstIndex = (currentPage - 1) * forPage; //indice del primer pokemon de la pagina
     const lastIndex = (currentPage - 1) * forPage + forPage; //indice del ultimo pokemon de la pagina
 
@@ -66,15 +66,13 @@ const Home = ()=>{
     }
 
 
+    // ******** Handlers 
+
     const handleChange = (e)=>{
         e.preventDefault();
-        setSearchString(e.target.value.toLowerCase());
+        setSearchString(e.target.value);
     }
 
-    /*const handleSubmit = (e)=>{
-        e.preventDefault();
-        dispatch(getByName(searchString));
-    }*/
 
     const handleSubmit = (e)=>{
         e.preventDefault();

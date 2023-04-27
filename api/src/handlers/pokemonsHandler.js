@@ -44,8 +44,7 @@ const createPokemonHandler = async (req, res)=>{
         const response= await createPokemonDB(name.toLowerCase(), img, health, attack, defense, speed, weight, height);
         res.status(201).json(response);
     }catch (error){
-        if (error.message === 'Pokemon already exists') res.status(400).json({error: error.message});
-        else if (error.message === 'Pokemon could not be created') res.status(400).json({error: error.message})
+        res.status(400).json({error: error.message});
     }
 }
 
@@ -56,7 +55,9 @@ const getPokemonByNameHandler= async (req, res)=>{
     }else{
         try{
             const response =  await getPokemonById(name).then(data=> data.data);
-            res.status(200).json(response);
+            if(data){
+                res.status(200).json(response);
+            }else res.status(400).json({error: 'Pokemons by that name has not been found.'})
         }catch(error){
             res.status(400).json({error: error.message})
         }
