@@ -11,7 +11,6 @@ import './form.modules.css';
 const Form = ()=>{
 
     const types = useSelector((state)=>state.types);
-    const newPokeTypes = [];
 
     const navigate = useNavigate();
 
@@ -36,7 +35,7 @@ const Form = ()=>{
         speed: '',
         height: '',
         weight: '',
-        types: [],
+        types: '',
     });
 
     const validate = (input, error)=>{
@@ -90,7 +89,7 @@ const Form = ()=>{
             errors.weight= 'This input must have positive numbers only';
         }else errors.weight= '';
         
-        if(!input.types) errors.types= '*This input is mandatory.';
+        if(input.types.length = 0) errors.types= '*This input is mandatory.';
         else errors.types= '';
 
         return errors;
@@ -112,9 +111,9 @@ const Form = ()=>{
                 weight: '',
                 types: [],
             });
+            dispatch(getPokemons())
             navigate('/home');
         }catch (error) {
-            console.log(error.status);
             alert(error.message);
         }
         return;
@@ -129,17 +128,31 @@ const Form = ()=>{
     }
 
     const handleChangeTypes = (e)=>{
-        /*if (input.types.length > 0){
+        const type = e.target.value;
 
-            input.types.forEach((e)=> aux.push(e));
-        }else{
-            aux.push(e.target.value);
-        }*/
+        if (!input.types.includes(type)) {
+            if (input.types.length == 0){
+                setInput({
+                    ...input,
+                    types: [type]
+                });
+            }else{
+                setInput({
+                    ...input,
+                    types: [...input.types, type]
+                });
+            }
+            setError(validate(input, error));
+        }
+    }
+
+    const handleClick= ()=>{
         setInput({
             ...input,
-            types: [...input.types, e.target.value]
+            types: [],
         });
     }
+
     useEffect(()=>{
         dispatch(getTypes())
     }, [dispatch]);
@@ -194,17 +207,27 @@ const Form = ()=>{
                     <input className="input" type="number" name='weight' onChange={handleChange} value={input.value}/>
                     <span className="span--form">{error.weight}</span>
                 </div>
-                <select name='types' id="" onChange={handleChangeTypes} >
-                    {types.map((e)=> <option  value={e.id} name={e.name}>{e.name}</option>
-                    )}
-                </select>
+                <div className="select-container">
+                    <select name='types' id="" onChange={handleChangeTypes} >
+                        {types.map((e)=> <option key={e.id} value={e.name}>{e.name}</option>
+                        )}
+                    </select>
+                    <span className="span--form">{error.types}</span>
+                    <button type='button' className="btn--form" onClick={handleClick}>Clear types</button>
+                </div>
                 <div className='types'>
 
                     {input.types.length > 0?  input.types.map((e)=> <p>{e}</p>) : 
                 
                     <div>No types selected</div>}
                 </div>
-                <button  type="submit" className="btn--form" disabled={error.name || error.img || error.health || error.attack || error.defense || error.speed || error.height || error.weight || error.types ? true: false}>Submit</button>
+                {error.name || error.img || error.health || error.attack || error.defense || error.speed || error.height || error.weight || input.types.length == 0 ? 
+                <div>
+                    <h3>Errors founded.</h3>
+                </div> : 
+                <>
+                    <button  type="submit" className="btn--form" >Submit</button>
+                </>}
             </form>
         </>
     );

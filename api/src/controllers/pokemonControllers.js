@@ -12,14 +12,8 @@ const createPokemonDB = async (name, img, health, attack, defense, speed, weight
                 if (!weight) weight= 0;
                 if (!height) height= 0;
                 const newPokemon =  await Pokemon.create({name, img, health, attack, defense, speed, weight, height});
-                console.log(types);
-                console.log('111111111111111111111');
-                const newTypes= await Type.findAll( {where: {id: types}} );
-
+                const newTypes= await Type.findAll( {where: {name: types}} );
                 await newPokemon.addTypes(newTypes);
-                //const xd = await Pokemon.findOne({where: {name: name}, include: {model: Type, attributes: ["name"]}, through: { attributes: []}   })
-            console.log(newPokemon);
-            console.log('**************************');
                 return newPokemon.dataValues;
             }
     }catch(error){
@@ -27,7 +21,6 @@ const createPokemonDB = async (name, img, health, attack, defense, speed, weight
             throw new Error ('Pokemon could not be created');
     }
 }
-
 
 
 //! GET POKEMONS

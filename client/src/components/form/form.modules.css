@@ -3,6 +3,10 @@
     flex-wrap: wrap;
     gap: 20px;
 }
+.select-container{
+    display: flex;
+    gap: 20px;
+}
 .form--pokemon {
     display: flex;
     flex-direction: column;

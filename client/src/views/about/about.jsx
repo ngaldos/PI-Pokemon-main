@@ -4,7 +4,9 @@ import Nav from '../../components/nav/nav';
 const About = ()=>{
     return (
         <div className={style.higher}>
-            <Nav/>
+            <div className={style.nav}>
+                <Nav/>
+            </div>
             <div className={style.text}>
                 <h3>Website made by Nicolas Galdos</h3>
                 <p>This website was made by putting into practice everything I've learned from Soy Henry.</p>
