@@ -4,6 +4,7 @@
     flex-direction: row;
     font-size: 30px;
     padding-bottom: 8px;
+    width: 100%;
 }
 
 .filter{
@@ -19,5 +20,4 @@
 }
 .select{
     display: flex;
-    margin-right: 55px;
 }

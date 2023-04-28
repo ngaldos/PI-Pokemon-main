@@ -106,8 +106,7 @@ const Home = ()=>{
     return(
         <div className={allPokemons?.length > 0? style.home: style.loader}>
             {allPokemons.length > 0 ? 
-            <div>
-                <div >
+                < >
                     <div className={style.navContainer}>
                         <Nav/>
                         <div className={style.search}>
@@ -135,8 +134,7 @@ const Home = ()=>{
                         )}
                     </div>
                     <Pagination page={currentPage} setPage={setCurrentPage} maximus={max}/>
-                </div>
-            </div> : <div className={style.loader}>
+            </> : <div className={style.loader}>
                 <Loader/>
             </div>
             }

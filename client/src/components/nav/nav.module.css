@@ -3,4 +3,6 @@
     flex-direction:row;
     justify-content:space-around;
     font-size: 35px;
+    position: relative;
+    z-index: 50000000;
 }

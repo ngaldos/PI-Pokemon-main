@@ -195,11 +195,15 @@ const Form = ()=>{
                     <span className="span--form">{error.weight}</span>
                 </div>
                 <select name='types' id="" onChange={handleChangeTypes} >
-                    {types.map((e)=> <option  value={e.id}>{e.name}</option>
+                    {types.map((e)=> <option  value={e.id} name={e.name}>{e.name}</option>
                     )}
                 </select>
-                {input.types.length > 0?  input.types.map((e)=> <p>{e}</p>) : 
-                <div>No types selected</div>}
+                <div className='types'>
+
+                    {input.types.length > 0?  input.types.map((e)=> <p>{e}</p>) : 
+                
+                    <div>No types selected</div>}
+                </div>
                 <button  type="submit" className="btn--form" disabled={error.name || error.img || error.health || error.attack || error.defense || error.speed || error.height || error.weight || error.types ? true: false}>Submit</button>
             </form>
         </>
