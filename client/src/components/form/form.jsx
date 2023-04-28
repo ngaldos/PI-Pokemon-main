@@ -11,6 +11,7 @@ import './form.modules.css';
 const Form = ()=>{
 
     const types = useSelector((state)=>state.types);
+    const newPokeTypes = [];
 
     const navigate = useNavigate();
 
@@ -23,7 +24,8 @@ const Form = ()=>{
         defense: '',
         speed: '',
         height: '',
-        weight: ''
+        weight: '',
+        types: []
     });
     const [error, setError] = useState({
         name: '',
@@ -33,7 +35,8 @@ const Form = ()=>{
         defense: '',
         speed: '',
         height: '',
-        weight: ''
+        weight: '',
+        types: [],
     });
 
     const validate = (input, error)=>{
@@ -87,6 +90,8 @@ const Form = ()=>{
             errors.weight= 'This input must have positive numbers only';
         }else errors.weight= '';
         
+        if(!input.types) errors.types= '*This input is mandatory.';
+        else errors.types= '';
 
         return errors;
     }
@@ -104,7 +109,8 @@ const Form = ()=>{
                 defense: '',
                 speed: '',
                 height: '',
-                weight: ''
+                weight: '',
+                types: [],
             });
             navigate('/home');
         }catch (error) {
@@ -120,7 +126,19 @@ const Form = ()=>{
             [e.target.name]: e.target.value,
         });
         setError(validate({...input, [e.target.name]: e.target.value,}, error));
-        ;
+    }
+
+    const handleChangeTypes = (e)=>{
+        /*if (input.types.length > 0){
+
+            input.types.forEach((e)=> aux.push(e));
+        }else{
+            aux.push(e.target.value);
+        }*/
+        setInput({
+            ...input,
+            types: [...input.types, e.target.value]
+        });
     }
     useEffect(()=>{
         dispatch(getTypes())
@@ -176,11 +194,13 @@ const Form = ()=>{
                     <input className="input" type="number" name='weight' onChange={handleChange} value={input.value}/>
                     <span className="span--form">{error.weight}</span>
                 </div>
-                <select name='types' id="">
-                    {types.map((e)=> <option  value={e.index}>{e.name}</option>
+                <select name='types' id="" onChange={handleChangeTypes} >
+                    {types.map((e)=> <option  value={e.id}>{e.name}</option>
                     )}
                 </select>
-                <button  type="submit" className="btn--form" disabled={error.name || error.img || error.health || error.attack || error.defense || error.speed || error.height || error.weight? true: false}>Submit</button>
+                {input.types.length > 0?  input.types.map((e)=> <p>{e}</p>) : 
+                <div>No types selected</div>}
+                <button  type="submit" className="btn--form" disabled={error.name || error.img || error.health || error.attack || error.defense || error.speed || error.height || error.weight || error.types ? true: false}>Submit</button>
             </form>
         </>
     );

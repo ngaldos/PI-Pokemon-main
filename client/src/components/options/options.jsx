@@ -18,9 +18,7 @@ export default function Options ({filterOwn, filterCloud, orderByName, orderByNa
                 <button onClick={orderByAttack}>Attack upwards</button>
                 <button onClick={orderByAttackBack}>Attack downwards</button>
             </div>
-            <div className={style.filter}>
-                <button onClick={filterBoth}>All</button>
-                <select onChange={filterByType}>
+            <select onChange={filterByType} className={style.select}>
                     <option selected disabled>Select Types</option>
                     <option value="all">All</option>
                     {pokeTypes?.map((type) => {
@@ -31,6 +29,8 @@ export default function Options ({filterOwn, filterCloud, orderByName, orderByNa
               );
             })}
         </select>
+            <div className={style.filter}>
+                <button onClick={filterBoth}>All</button>
                 <button onClick={filterCloud}>Cloud pokemons</button>
                 <button onClick={filterOwn}>Own pokemons</button>
             </div>

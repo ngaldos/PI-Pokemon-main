@@ -67,7 +67,6 @@ function rootReducer (state = initialState, action){
             return {
                 ...state,
                 pokemonsCopy: filteredTypes[0] ? filteredTypes : ["Theres no pokemons type"],
-                //filtered: filteredTypes[0] ? filteredTypes : ["Theres no pokemons type"]
             };
             
 

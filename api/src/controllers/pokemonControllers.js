@@ -20,7 +20,7 @@ const createPokemonDB = async (name, img, health, attack, defense, speed, weight
                 //const xd = await Pokemon.findOne({where: {name: name}, include: {model: Type, attributes: ["name"]}, through: { attributes: []}   })
             console.log(newPokemon);
             console.log('**************************');
-                return newPokemon;
+                return newPokemon.dataValues;
             }
     }catch(error){
         if (!error.message == 'Pokemon already exists.') 
