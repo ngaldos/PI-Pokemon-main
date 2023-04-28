@@ -23,28 +23,32 @@ const Detail = ()=>{
     }, [dispatch]);
 
 
-
+    console.log(detail);
     return(
-        <div >
+        <div>
             <div className={style.nav}>
                 <Nav/>
             </div>
             <div className={style.higher}>
                 <div className={style.text}>
                     <img src={detail?.img} alt='IMG' className={style.img}/>
-                    <h2>ID: {detail?.id}</h2>
-                    <h2>Name: {detail?.name}</h2>
-                    <h3>Health: {detail?.health}</h3>
-                    <h3>Attack: {detail?.attack}</h3>
-                    <h3>Defense: {detail?.defense}</h3>
-                    <h3>Speed: {detail?.speed}</h3>
-                    <h3>Height: {detail?.height}</h3>
-                    <h3>weight: {detail?.weight}</h3>
+                    <h2 className={style.subtitle}>ID: {detail?.id}</h2>
+                    <h2 className={style.subtitle}>Name: {detail?.name}</h2>
+                    <h3 className={style.subtitle}>Health: {detail?.health}</h3>
+                    <h3 className={style.subtitle}>Attack: {detail?.attack}</h3>
+                    <h3 className={style.subtitle}>Defense: {detail?.defense}</h3>
+                    <h3 className={style.subtitle}>Speed: {detail?.speed}</h3>
+                    <h3 className={style.subtitle}>Height: {detail?.height}</h3>
+                    <h3 className={style.subtitle}>Weight: {detail?.weight}</h3>
+                    <div className={style.types}>
+                    <h3 className={style.subtitle}>Types: </h3>
+                    {detail?.types?.map((e)=><p className={style.subtitle}>{e}</p>)}
+                    </div>
                 </div>
             </div>
         </div>
     );
 }
-
+//
 export default Detail;
 

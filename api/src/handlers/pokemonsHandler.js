@@ -1,5 +1,5 @@
 const axios = require('axios');
-const {createPokemonDB, getPokemonById, getPokemons} = require('../controllers/pokemonControllers');
+const {createPokemonDB, getPokemonById, getPokemons, getPokemonByName} = require('../controllers/pokemonControllers');
 
 
 const getPokemonsHandler =  async (req, res)=>{
@@ -9,7 +9,7 @@ const getPokemonsHandler =  async (req, res)=>{
             const pokemons = await getPokemons();
             res.status(200).json(pokemons);
         }else{
-            const response = await getPokemonById(name.toLowerCase(), 'all'); //Busco la query
+            const response = await getPokemonByName(name.toLowerCase()); //Busco la query
             res.status(200).json(response);
         }
     }catch(error){
@@ -21,34 +21,16 @@ const getPokemonByIdHandler = async (req, res)=>{
     const {id} = req.params;
     if (!id) throw new Error ('Invalid ID (Handler)');
     else{
+        
         try{
-            if (isNaN(id)){ // Si es NaN ==> Es de la base de datos
-                const response = await getPokemonById(id, 'bdd');
-                if (response == null){
-                    throw new Error('The ID dosent exits in the Data Base');
-                }else{
-                res.status(200).json(response);}
-            }else{ // Si no se busca en la API normalmente
-                const response = await getPokemonById(id, 'api');
-                res.status(200).json(response);
-            }
-        }catch(error){
+            const response = await getPokemonById(id);
+            console.log(response);
+            res.status(200).json(response);
+        }catch (error) {
             res.status(404).json({error: error.message});
         }
-    }
 }
-
-const createPokemonHandler = async (req, res)=>{
-    const {name, img, health, attack, defense, speed, weight, height, types} = req.body;
-    try{
-        const response= await createPokemonDB(name.toLowerCase(), img, health, attack, defense, speed, weight, height, types);
-        console.log(response);
-        res.status(200).json(response);
-    }catch (error){
-        res.status(400).json({error: error.message});
-    }
 }
-
 const getPokemonByNameHandler= async (req, res)=>{
     const {name} = req.query;
     if (!name){
@@ -64,6 +46,19 @@ const getPokemonByNameHandler= async (req, res)=>{
         }
     }
 }
+            
+const createPokemonHandler = async (req, res)=>{
+    const {name, img, health, attack, defense, speed, weight, height, types} = req.body;
+    try{
+        const response= await createPokemonDB(name.toLowerCase(), img, health, attack, defense, speed, weight, height, types);
+        console.log(response);
+        res.status(200).json(response);
+    }catch (error){
+        res.status(400).json({error: error.message});
+    }
+}
+
+
 
 
 

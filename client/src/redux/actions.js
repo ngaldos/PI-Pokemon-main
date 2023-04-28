@@ -15,6 +15,7 @@ export const ORDER_BY_ATTACK_BACKWARDS= 'ORDER_BY_ATTACK_BACKWARDS';
 export const FILTER_OWN= 'FILTER_OWN';
 export const FILTER_CLOUD= 'FILTER_CLOUD';
 export const FILTER_BOTH = 'FILTER_BOTH';
+export const FILTER_BY_TYPE = 'FILTER_BY_TYPE';
 
 
 export const RESET = 'RESET';
@@ -72,6 +73,8 @@ export function getByName (name){
     }
 }
 
+
+
 export function getDetail(id){
     return async (dispatch)=>{
         const response = await axios.get(`http://localhost:3001/pokemons/${id}`);
@@ -103,6 +106,13 @@ export const addPokemon = (pokemon)=>{
         } catch (error) {
             alert(error.message);
         }
+    }
+}
+
+export function filterByType(types){
+    return {
+        type: FILTER_BY_TYPE,
+        payload: types
     }
 }
 

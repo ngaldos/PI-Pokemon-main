@@ -1,7 +1,55 @@
-.form{
+.form--pokemon {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 50px;
+    background: linear-gradient(180deg, rgba(115,107,146,1) 0%, rgba(149,147,217,1) 35%, rgba(124,144,219,1) 100%);
+    border: solid 3px #F0F6F6;
+    border-radius: 20px;
+    padding: 20px;
+    width: 450px;
+    gap: 15px;
+}
+.label{
+    color:#fafafa;
+    font-weight: bold;
+    text-align: start;
+}
+select {
+    border: none;
+    background-color: #73EEDC;
+    padding: 3px;
+    border-radius: 8px;
+}
+.input {
+    padding: 5px;
+    border-radius: 10px;
+    height: 20px;
+    border: solid 2px #73EEDC;
+    font-weight: 550;
+}
+.div--form {
+    width: 400px;
+    height:50px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+.span--form {
+    color: #fafafa;
+    font-weight: bold;
+    text-align: end;
+}
+.btn--form {
+    background-color: #27213C;
+    border: none;
+    color: #fafafa;
+    border-radius: 12px;
+    font-size: 18px;
+    padding: 4px;
+}
+.btn--form:hover {
+    background-color: #003554;
+    cursor: pointer;
+    color: #fafafa;
 }

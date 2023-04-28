@@ -9,7 +9,8 @@ import Pagination from '../../components/pagination/pagination';
 
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {getPokemons, getByName, orderByNameD, orderByNameBackD, orderByAttackD, orderByAttackBackD, reset, filterCloudD, filterOwnD, filterBothD} from '../../redux/actions';
+import {getPokemons, getByName, orderByNameD, orderByNameBackD, orderByAttackD, orderByAttackBackD,  getTypes,
+    reset, filterCloudD, filterOwnD, filterBothD, filterByType} from '../../redux/actions';
 import { all } from 'axios';
 import Loader from '../../components/loader/loader.jsx';
 
@@ -20,7 +21,7 @@ import Loader from '../../components/loader/loader.jsx';
 const Home = ()=>{
     const dispatch = useDispatch();
 
-    //const [isLoaded, setIsLoaded] = useState(false) 
+    
     const originals = useSelector((state)=> state.originals);
     const allPokemons = useSelector((state)=>state.pokemons);
     const pokemonsCopy = useSelector((state)=>state.pokemonsCopy);
@@ -52,6 +53,7 @@ const Home = ()=>{
         e.preventDefault();
         dispatch(orderByAttackD(originals));
     }
+
     const filterOwn = (e)=>{
         e.preventDefault();
         dispatch(filterOwnD(allPokemons));
@@ -65,8 +67,16 @@ const Home = ()=>{
         dispatch(filterBothD(allPokemons));
     }
 
-
     // ******** Handlers 
+
+
+    function handleType(e) { //funcion para filtrar por tipo
+        e.preventDefault();
+        dispatch(filterByType(e.target.value));
+        setCurrentPage(1);
+    }
+
+
 
     const handleChange = (e)=>{
         e.preventDefault();
@@ -90,6 +100,7 @@ const Home = ()=>{
 
     useEffect(()=>{
         dispatch(getPokemons())
+        dispatch(getTypes())
     }, [dispatch]);
 
     return(
@@ -112,13 +123,14 @@ const Home = ()=>{
                                 orderByNameBack={orderByNameBack}
                                 orderByAttack={orderByAttack} 
                                 orderByAttackBack={orderByAttackBack}
-                                filterBoth={filterBoth}/>
+                                filterBoth={filterBoth}
+                                filterByType={handleType}/>
                     </div>
                     
                     <div className={style.container}>
                     {pokemonsCopy?.slice(firstIndex,lastIndex).map(pokemon => {
                             return(
-                                <Card poke={pokemon}/>
+                                <Card key={pokemon.id} poke={pokemon}/>
                             )} 
                         )}
                     </div>

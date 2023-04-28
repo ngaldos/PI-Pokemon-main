@@ -42,7 +42,7 @@ const createPokemonDB = async (name, img, health, attack, defense, speed, weight
             return{
                 id: data.dataValues.id,
                 name: data.dataValues.name,
-                image: data.dataValues.img,
+                img: data.dataValues.img,
                 health: data.dataValues.health,
                 attack: data.dataValues.attack,
                 defense: data.dataValues.defense,
@@ -86,45 +86,27 @@ const infoCleaner = (p)=>{
             });
 }
 
-const getPokemonById = async (id, src)=>{
-    if (src === 'api'){
-        try{
-            return infoCleaner(await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`).then(data=>data.data));
-        }catch (error) {throw new Error('Invalid ID {CTRL}')}
-        }else{
-            if (src === 'all'){ // ID es una query
-                pokes = (await getPokemons()).filter((e)=>e.name === id );
-                if (pokes.length == 1) return pokes[0]
-                else if (pokes.length !== 0) return pokes;
-                else throw new Error('The Pokemon dosent exist');
+const getPokemonByName = async (name)=>{
+    const pokes = (await getPokemons()).filter((e)=>e.name === name );
+    if (pokes.length == 1) return pokes[0]
+    else if (pokes.length !== 0) return pokes;
+    else throw new Error('The Pokemon dosent exist');
 
-                //const pokeDb= await Pokemon.findOne({ where:{ name: id }});
-               /* const pokeDb= await Pokemon.findOne({
-                    where: {name: id}
-                });
-                const pokeAPI = infoCleaner (await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`)
-                .then((data)=>{
-                    return data.data
-                }).catch(error=> {}))
-
-                const okAPI= !!(Object.values(pokeAPI).length > 0);
-                const okDb= !!(Object.values(pokeDb).length > 0);
-                    
-                if ( okAPI && okDb ){
-                        return [pokeDb, pokeAPI];
-                    }else if (okAPI && !okDb){
-                        return pokeAPI
-                    }else if (!okAPI && okDb){
-                        return pokeDb.dataValues;
-                }else{
-                    throw new Error('Fallo todo');
-                }*/
-            
-            }else{ // Si src ==> 'bdd' || otra cosa !== de UNDEFINED
-                const p= await Pokemon.findByPk(id);
-                return p;
-            }
-        }
 }
 
-module.exports= {createPokemonDB, getPokemonById, getPokemons};
+const getPokemonById = async (id)=>{
+    /*if (isNaN(id)){
+        const pokemons = (await getPokemons()).filter((e)=>e.id === id);
+        return pokemons[0];
+    }else{
+        const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`).then((data)=>data.data);
+        response = infoCleaner(response);
+        console.log(response);
+    }*/
+    const pokes = (await getPokemons()).filter((e)=>e.id == id );
+    if (Array.isArray(pokes))   return pokes[0]
+    else    return pokes;
+}
+
+
+module.exports= {createPokemonDB, getPokemonById, getPokemons, getPokemonByName};

@@ -1,5 +1,5 @@
 import React from 'react'
-import styles from "./pagination.modules.css"
+import "./pagination.modules.css"
 
 const Pagination = ({page, setPage, maximus}) => {
     const [input, setInput] = React.useState(1); //creo el estado input para setearle el valor a la etiqueta input
@@ -34,13 +34,13 @@ const Pagination = ({page, setPage, maximus}) => {
     }
     
     return (
-    <div className={styles.container}>
-        <button className={styles.btn} disabled={page <= 1} onClick={prevPage}> <p className={styles.left}>Prev</p> </button>
-        &nbsp;
-        <input className={styles.cont} onChange={(e) => onChange(e)} onKeyDown={e => keyInput(e)} name="page" autoComplete="off" value={input} />
-        <p className={styles.text}> de {Math.ceil(maximus)}</p>
-        &nbsp;  
-        <button className={styles.btn2} disabled={page >= Math.ceil(maximus)} onClick={nextPage}><p className={styles.right}>Next</p></button>
+        <div className='box'>
+        <div className='container'>
+            <button className='btn' disabled={page <= 1} onClick={prevPage}>Prev</button>
+            <input className='cont' onChange={(e) => onChange(e)} onKeyDown={e => keyInput(e)} name="page" autoComplete="off" value={input} />
+            <button className='btn' disabled={page >= Math.ceil(maximus)} onClick={nextPage}>Next</button>
+        </div>
+            <p className='text'> de {Math.ceil(maximus)}</p>
     </div>
     )
 }

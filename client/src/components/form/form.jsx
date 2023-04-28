@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 import axios from "axios";
 
-import style from './form.modules.css';
+import './form.modules.css';
 
 const Form = ()=>{
 
@@ -134,55 +134,55 @@ const Form = ()=>{
     ! RETURN *****
     */
     return (
-        <div className={style.form}>
-            <form  onSubmit={submitHandler}>
-                <div>
-                    <label>Name: </label>
-                    <input type="text" name='name' onChange={handleChange} value={input.value}/>
-                    <span>{error.name}</span>
+        <>
+            <form className='form--pokemon' onSubmit={submitHandler}>
+                <div className="div--form">
+                    <label htmlFor="name" className="label">Name: </label>
+                    <input className="input" type="text" name='name' onChange={handleChange} value={input.value}/>
+                    <span className="span--form">{error.name}</span>
                 </div>
-                <div>
-                    <label>Image (URL):</label>
-                    <input type="text" name='img' onChange={handleChange} value={input.value}/>
-                    <span>{error.img}</span>
+                <div className="div--form">
+                    <label htmlFor="img" className="label">Image (URL):</label>
+                    <input className="input" type="text" name='img' onChange={handleChange} value={input.value}/>
+                    <span className="span--form">{error.img}</span>
                 </div>
-                <div>
-                    <label>Health: </label>
-                    <input type="number" name='health' onChange={handleChange} value={input.value}/>
-                    <span>{error.health}</span>
+                <div className="div--form">
+                    <label htmlFor="health" className="label">Health: </label>
+                    <input className="input" type="number" name='health' onChange={handleChange} value={input.value}/>
+                    <span className="span--form">{error.health}</span>
                 </div>
-                <div>
-                    <label>Attack: </label>
-                    <input type="number" name='attack' onChange={handleChange} value={input.value}/>
-                    <span>{error.attack}</span>
+                <div className="div--form">
+                    <label htmlFor="attack" className="label">Attack: </label>
+                    <input className="input" type="number" name='attack' onChange={handleChange} value={input.value}/>
+                    <span className="span--form">{error.attack}</span>
                 </div>
-                <div>
-                    <label>Defense: </label>
-                    <input type="number" name='defense' onChange={handleChange} value={input.value}/>
-                    <span>{error.defense}</span>
+                <div className="div--form">
+                    <label htmlFor="defense" className="label">Defense: </label>
+                    <input className="input" type="number" name='defense' onChange={handleChange} value={input.value}/>
+                    <span className="span--form">{error.defense}</span>
                 </div>
-                <div>
-                    <label>Speed: </label>
-                    <input type="number" name='speed' onChange={handleChange} value={input.value}/>
-                    <span>{error.speed}</span>
+                <div className="div--form">
+                    <label htmlFor="speed" className="label">Speed: </label>
+                    <input className="input" type="number" name='speed' onChange={handleChange} value={input.value}/>
+                    <span className="span--form">{error.speed}</span>
                 </div>
-                <div>
-                    <label>Height: </label>
-                    <input type="number" name='height' onChange={handleChange} value={input.value}/>
-                    <span>{error.height}</span>
+                <div className="div--form">
+                    <label htmlFor="height" className="label">Height: </label>
+                    <input className="input" type="number" name='height' onChange={handleChange} value={input.value}/>
+                    <span className="span--form">{error.height}</span>
                 </div>
-                <div>
-                    <label>Weight: </label>
-                    <input type="number" name='weight' onChange={handleChange} value={input.value}/>
-                    <span>{error.weight}</span>
+                <div className="div--form">
+                    <label htmlFor="weight" className="label">Weight: </label>
+                    <input className="input" type="number" name='weight' onChange={handleChange} value={input.value}/>
+                    <span className="span--form">{error.weight}</span>
                 </div>
-                <select name='type' id="">
-                    {types.map((e)=> <option value='type'>{e.name}</option>
+                <select name='types' id="">
+                    {types.map((e)=> <option  value={e.index}>{e.name}</option>
                     )}
                 </select>
-                <button  type="submit"  disabled={error.name || error.img || error.health || error.attack || error.defense || error.speed || error.height || error.weight? true: false}>Submit</button>
+                <button  type="submit" className="btn--form" disabled={error.name || error.img || error.health || error.attack || error.defense || error.speed || error.height || error.weight? true: false}>Submit</button>
             </form>
-        </div>
+        </>
     );
 }
 
