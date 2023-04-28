@@ -1,10 +1,16 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
-import { addPokemon, getPokemons} from "../../redux/actions";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addPokemon, getPokemons, getTypes} from "../../redux/actions";
 import { useNavigate } from "react-router-dom";
 
 
+import axios from "axios";
+
+import style from './form.modules.css';
+
 const Form = ()=>{
+
+    const types = useSelector((state)=>state.types);
 
     const navigate = useNavigate();
 
@@ -116,8 +122,11 @@ const Form = ()=>{
         setError(validate({...input, [e.target.name]: e.target.value,}, error));
         ;
     }
+    useEffect(()=>{
+        dispatch(getTypes())
+    }, [dispatch]);
 
-
+        
 
 
 
@@ -125,8 +134,8 @@ const Form = ()=>{
     ! RETURN *****
     */
     return (
-        <div>
-            <form onSubmit={submitHandler}>
+        <div className={style.form}>
+            <form  onSubmit={submitHandler}>
                 <div>
                     <label>Name: </label>
                     <input type="text" name='name' onChange={handleChange} value={input.value}/>
@@ -167,6 +176,10 @@ const Form = ()=>{
                     <input type="number" name='weight' onChange={handleChange} value={input.value}/>
                     <span>{error.weight}</span>
                 </div>
+                <select name='type' id="">
+                    {types.map((e)=> <option value='type'>{e.name}</option>
+                    )}
+                </select>
                 <button  type="submit"  disabled={error.name || error.img || error.health || error.attack || error.defense || error.speed || error.height || error.weight? true: false}>Submit</button>
             </form>
         </div>

@@ -124,9 +124,9 @@ const Home = ()=>{
                     </div>
                     <Pagination page={currentPage} setPage={setCurrentPage} maximus={max}/>
                 </div>
-                </div> : <div className={style.loader}>
-                    <Loader/>
-                </div>
+            </div> : <div className={style.loader}>
+                <Loader/>
+            </div>
             }
             
         </div>

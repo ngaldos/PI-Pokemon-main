@@ -19,7 +19,6 @@ function App() {
   return (
     <div className="App fondo">
       <Routes>
-        
         <Route path='/' element={<Landing/>}/>
         <Route path='/home' element={<Home/>}/>
         <Route path='/pokemons/:id' element={<Detail/>}/>

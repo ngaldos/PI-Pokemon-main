@@ -4,6 +4,7 @@ export const GET_POKEMONS = 'GET_POKEMONS';
 export const GET_BY_NAME = 'GET_BY_NAME';
 export const GET_DETAIL = 'GET_DETAIL';
 export const CLEAN_DETAIL = 'CLEAN_DETAIL';
+export const GET_TYPES = 'GET_TYPES';
 
 export const ADD_POKEMON= 'ADD_POKEMON';
 
@@ -26,6 +27,16 @@ export const reset = (array)=>{
             type: "RESET",
             payload: array,
         })
+    }
+}
+
+export const getTypes = ()=>{
+    return async (dispatch)=>{
+        const response= await axios.get(`http://localhost:3001/types`);
+        return dispatch({
+            type: "GET_TYPES",
+            payload: response.data
+        });
     }
 }
 

@@ -6,6 +6,7 @@
     background-size: cover;
     width: 100%;
     min-height: 100vh;
+    
 }
 .search{
     display: flex;
@@ -21,11 +22,10 @@
 }
 
 .loader{
-    width: 100dvh;
-    height:100%;
+    transform: translateY(150px);
     display: flex;
+
     justify-content: center;
-    align-items: center;
 }
 .logo{
     padding-top: 10%;

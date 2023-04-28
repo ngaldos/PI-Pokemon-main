@@ -3,9 +3,8 @@ const axios = require('axios');
 //const { ULR_BASE } = Process.env;
 
 const createPokemonDB = async (name, img, health, attack, defense, speed, weight, height, types)=>{
+    const pokeDb= await Pokemon.findOne({where: {name: name}});
     try{
-        
-        const pokeDb= await Pokemon.findOne({where: {name: name}});
         if (pokeDb){
             throw new Error ('Pokemon already exists.');
         }else{
@@ -13,46 +12,21 @@ const createPokemonDB = async (name, img, health, attack, defense, speed, weight
                 if (!weight) weight= 0;
                 if (!height) height= 0;
                 const newPokemon =  await Pokemon.create({name, img, health, attack, defense, speed, weight, height});
-                newPokemon.addTypes(types);
+                console.log(types);
+                console.log('111111111111111111111');
+                const newTypes= await Type.findAll( {where: {id: types}} );
 
-                // ! Arreglar el tema de los types
-                const xd = await Pokemon.findOne({where: {name: name}, include: {model: Type, attributes: ["name"]}, through: { attributes: []}   })
-
-                console.log(xd);
-                return xd;
+                await newPokemon.addTypes(newTypes);
+                //const xd = await Pokemon.findOne({where: {name: name}, include: {model: Type, attributes: ["name"]}, through: { attributes: []}   })
+            console.log(newPokemon);
+            console.log('**************************');
+                return newPokemon;
             }
     }catch(error){
         if (!error.message == 'Pokemon already exists.') 
             throw new Error ('Pokemon could not be created');
     }
-
-    //newPokemon.addTypes(type);
 }
-/*
-try {
-        let { name, life, attack, defense, speed, height, weight, image,types} = req.body; // atributos desde el modelo
-        const pokeDb = await Pokemon.findOne({ where:{ name: name }, include: Type})
-        if (!name) return res.status(404).send("Name is required");
-        !life ? life = 1 : life; 
-        !attack ? attack = 1 : attack; 
-        !defense ? defense = 1 : defense;
-        !speed ? speed = 1 : speed; 
-        !height ? height = 1 : height; 
-        !weight ? weight = 1 : weight;
-        !types.length ? types = [] : types;
-        if(pokeDb) return res.status(404).send("Pokemon already exists");
-        const nameLower = name.toLowerCase();
-        const typesLower = types?.map((type) => type.toLowerCase());
-        const create = await Pokemon.create({name : nameLower,life,attack, defense, speed, height, weight,image});
-        const pokeType = await Type.findAll({where:{name: typesLower}});
-        create.addType(pokeType);
-        res.status(201).send({msg: "Pokemon successfully created"}); 
-    } catch (error) {
-        res.status(404).send({error: error.message});
-    }
-*/
-
-
 
 
 
@@ -64,9 +38,6 @@ try {
             attributes: ["name"],
             through: {attributes: []}
         }]});
-
-
-        
         pokeDb = await pokeDb.map((data)=>{
             return{
                 id: data.dataValues.id,
@@ -122,37 +93,33 @@ const getPokemonById = async (id, src)=>{
         }catch (error) {throw new Error('Invalid ID {CTRL}')}
         }else{
             if (src === 'all'){ // ID es una query
-                /*const array = [];
-                pokes = (await getPokemons()).forEach((e)=>{
-                    if (e.name === id) array.push(e);
-                });
-                if (array.length == 1) return array[0]
-                else if (array.length !== 0) return array;
-                else throw new Error('The Pokemon dosent exist');*/
+                pokes = (await getPokemons()).filter((e)=>e.name === id );
+                if (pokes.length == 1) return pokes[0]
+                else if (pokes.length !== 0) return pokes;
+                else throw new Error('The Pokemon dosent exist');
 
                 //const pokeDb= await Pokemon.findOne({ where:{ name: id }});
-                const pokeDb= await Pokemon.findOne({
+               /* const pokeDb= await Pokemon.findOne({
                     where: {name: id}
                 });
                 const pokeAPI = infoCleaner (await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`)
                 .then((data)=>{
                     return data.data
                 }).catch(error=> {}))
-                if (!pokeDb && !pokeAPI) throw new Error('Pokemons by that name has not been found. (1)');
-                else{
 
-                    if (pokeAPI && pokeDb){
+                const okAPI= !!(Object.values(pokeAPI).length > 0);
+                const okDb= !!(Object.values(pokeDb).length > 0);
+                    
+                if ( okAPI && okDb ){
                         return [pokeDb, pokeAPI];
-                    }else if (pokeAPI && !pokeDb){
+                    }else if (okAPI && !okDb){
                         return pokeAPI
-                    }
-                    else if (pokeDb && !pokeAPI){
+                    }else if (!okAPI && okDb){
                         return pokeDb.dataValues;
                 }else{
                     throw new Error('Fallo todo');
-                }
-                }
-                
+                }*/
+            
             }else{ // Si src ==> 'bdd' || otra cosa !== de UNDEFINED
                 const p= await Pokemon.findByPk(id);
                 return p;
