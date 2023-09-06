@@ -80,11 +80,20 @@ const infoCleaner = (p)=>{
 }
 
 const getPokemonByName = async (name)=>{
-    const pokes = (await getPokemons()).filter((e)=>e.name === name );
-    if (pokes.length == 1) return pokes[0]
-    else if (pokes.length !== 0) return pokes;
-    else throw new Error('The Pokemon dosent exist');
-
+    //const pokes = (await getPokemons()).filter((e)=>e.name === name );
+    const pokeDb = await Pokemon.findOne({where: {name: name}});
+    const pokeApi = await axios.get(`https://pokeapi.co/api/v2/pokemon/${name}`).then((data)=> infoCleaner(data.data)).catch(()=>{});
+    console.log('********************');
+    console.log(`***** *** ${name}`);
+    console.log('********************');
+    console.log(!!pokeApi);
+    console.log('********************');
+    console.log(!!pokeDb);
+    if ( (!!pokeApi) && (!!pokeDb) )    return [pokeDb, pokeApi];
+    else    if (!!pokeApi) return pokeApi;
+    else    if (!!pokeDb) return pokeDb;
+    else   throw new Error('The Pokemon dosent exist');
+    
 }
 
 const getPokemonById = async (id)=>{
