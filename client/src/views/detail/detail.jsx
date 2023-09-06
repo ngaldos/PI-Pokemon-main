@@ -37,9 +37,12 @@ const Detail = ()=>{
                     <h3 className={style.subtitle}>Health: {detail?.health}</h3>
                     <h3 className={style.subtitle}>Attack: {detail?.attack}</h3>
                     <h3 className={style.subtitle}>Defense: {detail?.defense}</h3>
-                    <h3 className={style.subtitle}>Speed: {detail?.speed}</h3>
-                    <h3 className={style.subtitle}>Height: {detail?.height}</h3>
-                    <h3 className={style.subtitle}>Weight: {detail?.weight}</h3>
+                    {detail.speed == 0 ? <></> : 
+                    <h3 className={style.subtitle}>Speed: {detail?.speed}</h3>}
+                    {detail.height == 0 ? <></> : 
+                    <h3 className={style.subtitle}>Height: {detail?.height}</h3>}
+                    {detail.weight == 0 ? <></> : 
+                    <h3 className={style.subtitle}>Weight: {detail?.weight}</h3>}
                     <div className={style.types}>
                     <h3 className={style.subtitle}>Types: </h3>
                     {detail?.types?.map((e)=><p className={style.subtitle}>{e}</p>)}
