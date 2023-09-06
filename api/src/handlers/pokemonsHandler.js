@@ -24,7 +24,6 @@ const getPokemonByIdHandler = async (req, res)=>{
         
         try{
             const response = await getPokemonById(id);
-            console.log(response);
             res.status(200).json(response);
         }catch (error) {
             res.status(404).json({error: error.message});

@@ -80,15 +80,8 @@ const infoCleaner = (p)=>{
 }
 
 const getPokemonByName = async (name)=>{
-    //const pokes = (await getPokemons()).filter((e)=>e.name === name );
     const pokeDb = await Pokemon.findOne({where: {name: name}});
     const pokeApi = await axios.get(`https://pokeapi.co/api/v2/pokemon/${name}`).then((data)=> infoCleaner(data.data)).catch(()=>{});
-    console.log('********************');
-    console.log(`***** *** ${name}`);
-    console.log('********************');
-    console.log(!!pokeApi);
-    console.log('********************');
-    console.log(!!pokeDb);
     if ( (!!pokeApi) && (!!pokeDb) )    return [pokeDb, pokeApi];
     else    if (!!pokeApi) return pokeApi;
     else    if (!!pokeDb) return pokeDb;
@@ -97,17 +90,13 @@ const getPokemonByName = async (name)=>{
 }
 
 const getPokemonById = async (id)=>{
-    /*if (isNaN(id)){
-        const pokemons = (await getPokemons()).filter((e)=>e.id === id);
-        return pokemons[0];
+    if (isNaN(id)){
+        const pokemonDb = await Pokemon.findOne({where: {id: id}});
+        return pokemonDb;
     }else{
-        const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`).then((data)=>data.data);
-        response = infoCleaner(response);
-        console.log(response);
-    }*/
-    const pokes = (await getPokemons()).filter((e)=>e.id == id );
-    if (Array.isArray(pokes))   return pokes[0]
-    else    return pokes;
+        const pokemonApi = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`).then((data)=>infoCleaner(data.data));
+        return pokemonApi;
+    }
 }
 
 
