@@ -16,6 +16,9 @@ export default function (){
                 <Link to= '/about'>
                     <p>About</p>
                 </Link>
+                <Link to= '/singUp'>
+                    <p>Sing Up</p>
+                </Link>
             </div>
     );
 }

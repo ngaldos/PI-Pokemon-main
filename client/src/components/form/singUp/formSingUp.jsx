@@ -47,9 +47,7 @@ const FormSingUp = ()=>{
         }else errors.lastName= '';
         
         if (!input.mail) errors.mail= '*This input is mandatory.';
-        else if (mailRegEx.test(input.mail)){
-            errors.mail= 'This input must have only letters';
-        }else errors.mail= '';
+        else errors.mail= '';
 
         if (!input.password) errors.password= '*This input is mandatory.';
         else errors.password= '';
@@ -66,7 +64,8 @@ const FormSingUp = ()=>{
                 lastName: '',
                 mail: '',
                 password: ''
-            }).then(alert(`User registered successfully`));
+            });
+            alert(`User registered successfully`);
 
             navigate('/home');
         } catch (error) {
@@ -74,11 +73,7 @@ const FormSingUp = ()=>{
         }
     }
 
-    const display = (error) =>{
-        if (error.name || error.lastName || error.mail || error.password)
-            return false;
-        else return true;
-    }
+    
 
     return (
         <>
@@ -107,7 +102,7 @@ const FormSingUp = ()=>{
                     <span className="span--form">{error.password}</span>
                 </div>
 
-                {display(error) ? <div>
+                {!!error.name || !!error.lastName || !!error.mail || !!error.password ? <div>
                     <h3>Errors founded.</h3>
                 </div> : 
                 <>
