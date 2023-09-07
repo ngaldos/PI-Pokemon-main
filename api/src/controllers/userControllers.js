@@ -20,4 +20,11 @@ const getUser = async (mail)=>{
     return response.dataValues
 }
 
-module.exports = {createUser, getUsers, getUser};
+const getUserById = async (id)=>{
+    if (isNaN(id)){
+        const response = await User.findOne({where: {id}});
+        return response.dataValues;
+    }else   throw new Error('No user found with that ID.');
+}
+
+module.exports = {createUser, getUsers, getUser, getUserById};
