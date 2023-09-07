@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addPokemon, getPokemons, getTypes} from "../../redux/actions";
+import { addPokemon, getPokemons, getTypes} from "../../../redux/actions";
 import { useNavigate } from "react-router-dom";
 
 

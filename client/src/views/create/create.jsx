@@ -1,5 +1,5 @@
 import './create.modules.css';
-import Form from '../../components/form/form';
+import Form from '../../components/form/pokemon/form';
 import Nav from '../../components/nav/nav';
 
 
