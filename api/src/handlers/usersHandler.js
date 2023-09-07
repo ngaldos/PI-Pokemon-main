@@ -1,4 +1,4 @@
-const {createUser, getUsers, getUser, getUserById} = require('../controllers/userControllers');
+const {createUser, getUsers, getUser, getUserById, auth} = require('../controllers/userControllers');
 
 
 const createUserHandler = async (req, res)=>{
@@ -61,4 +61,24 @@ const getUserByIdHandler = async (req, res)=>{
     }
 }
 
-module.exports = {createUserHandler, getUsersHandler, getUserHandler, getUserByIdHandler};
+const authHandler = async (req, res)=>{
+    const {mail, password} = req.body;
+    if (!mail || !password) res.status(400).send('Wrong or missing inputs.');
+    else{
+        try {
+            const response = await auth(mail, password);
+            if (response)   res.status(200).send('Mail and password matched correctly.');
+            else    res.status(400).send(`Mail and password doesn't match.`);
+        } catch (error) {
+            res.status(500).send(error.message);    
+        }
+    }
+}
+
+module.exports = {createUserHandler,
+    getUsersHandler,
+    getUserHandler,
+    getUserByIdHandler,
+    authHandler,
+
+    };

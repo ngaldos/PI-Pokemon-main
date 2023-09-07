@@ -27,4 +27,21 @@ const getUserById = async (id)=>{
     }else   throw new Error('No user found with that ID.');
 }
 
-module.exports = {createUser, getUsers, getUser, getUserById};
+const auth = async (mail, password)=>{
+    try {
+        const response = await User.findOne({where: {mail: mail}});
+        if ( (response.mail == mail) && (response.password == password) ){
+            return true;
+        }else
+            return false;
+    } catch (error) {
+        throw new Error(`The mail wasn't found.`);
+    }
+
+}
+
+module.exports = {createUser,
+    getUsers,
+    getUser,
+    getUserById,
+    auth};
