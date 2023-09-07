@@ -11,7 +11,7 @@ const createUser = async (name, lastName, mail, password)=>{
 }
 
 const getUsers = async ()=>{
-    const response = User.findAll();
+    const response = await User.findAll();
     return response;
 }
 
