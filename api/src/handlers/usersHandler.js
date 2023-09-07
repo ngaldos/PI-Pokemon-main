@@ -1,4 +1,4 @@
-const {createUser, getUsers, getUser, getUserById, auth} = require('../controllers/userControllers');
+const {createUser, getUsers, getUser, getUserById, auth, deleteUser} = require('../controllers/userControllers');
 
 
 const createUserHandler = async (req, res)=>{
@@ -75,10 +75,23 @@ const authHandler = async (req, res)=>{
     }
 }
 
+const deleteUserHandler = async (req, res)=>{
+    const {mail} = req.body;
+    if (!mail) res.status(400).send(`Mail wrong or missing.`);
+    else{
+        try {
+            const response = await deleteUser(mail);
+            res.status(200).json(response);
+        } catch (error) {
+            res.status(500).send(error.message);
+        }
+    }
+}
+
 module.exports = {createUserHandler,
     getUsersHandler,
     getUserHandler,
     getUserByIdHandler,
     authHandler,
-
+    deleteUserHandler,
     };
