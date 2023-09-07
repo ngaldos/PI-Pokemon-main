@@ -6,6 +6,7 @@ import About from './views/about/about';
 import Detail from './views/detail/detail';
 import Home from './views/home/home';
 import Create from './views/create/create';
+import SingUp from './views/singUp/singUp'
 
 
 
@@ -20,6 +21,7 @@ function App() {
         <Route path='/pokemons/:id' element={<Detail/>}/>
         <Route path='/about' element={<About/>}/>
         <Route path='/create' element={<Create/>}/>
+        <Route path= '/singUp' element={<SingUp/>}/>
       </Routes>
       
     </div>

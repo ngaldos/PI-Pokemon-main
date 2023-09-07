@@ -7,6 +7,7 @@ export const CLEAN_DETAIL = 'CLEAN_DETAIL';
 export const GET_TYPES = 'GET_TYPES';
 
 export const ADD_POKEMON= 'ADD_POKEMON';
+export const CREATE_USER = "CREATE_USER";
 
 export const ORDER_BY_NAME= 'ORDER_BY_NAME';
 export const ORDER_BY_NAME_BACKWARDS= 'ORDER_BY_NAME_BACKWARDS';
@@ -93,6 +94,20 @@ export const cleanDetail = ()=>{
     }
 }
 
+
+export const createUser = (user)=>{
+    return async (dispatch) =>{
+        try {
+            const response = await axios.post(`http://localhost:3001/users/`, user);
+            return dispatch({
+                type: 'CREATE_USER',
+                payload: response,
+            });
+        } catch (error) {
+            alert(error.message);
+        }
+    }
+}
 
 export const addPokemon = (pokemon)=>{
     
@@ -204,3 +219,4 @@ export const filterBothD= (array)=>{
         });
     }
 }
+
