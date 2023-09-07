@@ -15,4 +15,9 @@ const getUsers = async ()=>{
     return response;
 }
 
-module.exports = {createUser, getUsers};
+const getUser = async (mail)=>{
+    const response = await User.findOne({where: {mail}});
+    return response.dataValues
+}
+
+module.exports = {createUser, getUsers, getUser};

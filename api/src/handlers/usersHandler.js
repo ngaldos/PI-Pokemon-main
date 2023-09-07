@@ -1,4 +1,4 @@
-const {createUser, getUsers} = require('../controllers/userControllers');
+const {createUser, getUsers, getUser} = require('../controllers/userControllers');
 
 
 const createUserHandler = async (req, res)=>{
@@ -16,12 +16,36 @@ const createUserHandler = async (req, res)=>{
 }
 
 const getUsersHandler = async (req, res)=>{
-    try {
-        const response = await getUsers();
-        res.status(200).json(response);
-    } catch (error) {
-        res.status(400).send(error.message);
+    const {mail} = req.query;
+    if (!mail){
+        try {
+            const response = await getUsers();
+            res.status(200).json(response);
+        } catch (error) {
+            res.status(400).send(error.message);
+        }
+    }else{
+        try {
+            const response = await getUser(mail);
+            res.status(200).json(response);
+        } catch (error) {
+            res.status(500).send(error.message);
+        }
     }
 }
 
-module.exports = {createUserHandler, getUsersHandler};
+const getUserHandler = async (req, res)=>{
+    const {mail} = req.body;
+    if (!!mail){
+        res.status(400).send('The mail is missing or invalid');
+    }else{
+        try {
+            const response = await getUser(mail);
+            res.status(200).json(response);
+        } catch (error) {
+            res.status(500).send(error.message);
+        }
+    }
+}
+
+module.exports = {createUserHandler, getUsersHandler, getUserHandler};
