@@ -38,7 +38,9 @@ const getUserById = async (id)=>{
 
 const auth = async (mail, password)=>{
     try {
-        const response = await User.findOne({where: {mail: mail}});
+        console.log('Dentro del CTRL');
+        const response = await User.findOne({where: {mail: mail}}).then((data)=>data.dataValues);
+        console.log(`ACA 2`);
         if ( (response.mail == mail) && (response.password == password) ){
             return true;
         }else

@@ -1,6 +1,6 @@
 import { GET_POKEMONS, GET_BY_NAME, GET_DETAIL, CLEAN_DETAIL, ADD_POKEMON, GET_TYPES, FILTER_BY_TYPE,
     ORDER_BY_NAME,ORDER_BY_NAME_BACKWARDS, ORDER_BY_ATTACK, ORDER_BY_ATTACK_BACKWARDS,
-     RESET, FILTER_OWN, FILTER_CLOUD, FILTER_BOTH, CREATE_USER
+     RESET, FILTER_OWN, FILTER_CLOUD, FILTER_BOTH, CREATE_USER, SING_IN
 } from "./actions";
 
 const initialState = {
@@ -8,11 +8,14 @@ const initialState = {
     pokemonsCopy: [],
     originals: [],
     types: [],
-    detail: {}
+    detail: {},
+    user: {},
 };
 
 function rootReducer (state = initialState, action){
     switch (action.type){
+    case SING_IN:
+        return {...state}
     case CREATE_USER: 
         return {...state}
     case GET_POKEMONS:

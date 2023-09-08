@@ -7,6 +7,7 @@ import Detail from './views/detail/detail';
 import Home from './views/home/home';
 import Create from './views/create/create';
 import SingUp from './views/singUp/singUp'
+import SingIn from './views/singIn/singIn'
 
 
 
@@ -22,6 +23,8 @@ function App() {
         <Route path='/about' element={<About/>}/>
         <Route path='/create' element={<Create/>}/>
         <Route path= '/singUp' element={<SingUp/>}/>
+        <Route path= '/singIn' element={<SingIn/>}/>
+
       </Routes>
       
     </div>

@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+export const SING_IN = 'SING_IN';
+
 export const GET_POKEMONS = 'GET_POKEMONS';
 export const GET_BY_NAME = 'GET_BY_NAME';
 export const GET_DETAIL = 'GET_DETAIL';
@@ -22,6 +24,20 @@ export const FILTER_BY_TYPE = 'FILTER_BY_TYPE';
 export const RESET = 'RESET';
 
 
+
+export const singIn = (user)=>{
+    return async (dispatch) =>{
+        const response = await axios.get('http://localhost:3001/auth', user).catch((error)=>{
+            alert('Mail y/o contraseña incorrectos. xDDDDDDDDDDDDDDDDDD');
+            //alert(error.message);
+        });
+        return dispatch({
+            type: "SING_IN",
+            payload: response,
+        });
+    }
+
+}
 
 export const reset = (array)=>{
     return async (dispatch)=>{

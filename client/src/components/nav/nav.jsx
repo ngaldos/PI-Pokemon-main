@@ -19,6 +19,9 @@ export default function (){
                 <Link to= '/singUp'>
                     <p>Sing Up</p>
                 </Link>
+                <Link to= '/singIn'>
+                    <p>Sing In</p>
+                </Link>
             </div>
     );
 }

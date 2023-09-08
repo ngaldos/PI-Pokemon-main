@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {createUser} from '../../../redux/actions';
 import { useNavigate } from "react-router-dom";
+import {createUser} from '../../../redux/actions';
 
 import './formSingUp.modules.css';
 
