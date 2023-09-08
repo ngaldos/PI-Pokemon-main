@@ -31,7 +31,7 @@ const getUser = async (mail)=>{
 
 const getUserById = async (id)=>{
     if (isNaN(id)){
-        const response = await User.findOne({where: {id}});
+        const response = await User.findByPk(id);
         return response.dataValues;
     }else   throw new Error('No user found with that ID.');
 }
