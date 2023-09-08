@@ -34,15 +34,22 @@ const getUserReviews = async (mail)=>{
         return response;
     }
 }
-//const getPokeReviews = async (id)=>{}
+const getPokemonReviews = async (id)=>{
+    const response = await Review.findAll({where: {PokemonId: id}});
+    return response;
+}
 
-//const deleteReview = async (id)=>{}
+const deleteReview = async (id)=>{
+    const response = await Review.findByPk(id);
+    const aux = Review.destroy({where: {id: response.id}});
+    return response;
+}
 
 module.exports = {
     createReview,
     getReviews,
     getUserReviews,
-    //getPokeReviews,
-    //deleteReview,
+    getPokemonReviews,
+    deleteReview,
 
 };
