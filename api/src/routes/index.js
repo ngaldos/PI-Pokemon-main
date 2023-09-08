@@ -23,7 +23,7 @@ router.use('/users', routerUser);
 router.use('/favs', routerFavs);
 router.use(`/reviews`, routerReviews);
 
-router.get('/auth', authHandler);
+router.post('/auth', authHandler);
 
 
 

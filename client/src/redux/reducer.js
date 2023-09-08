@@ -15,7 +15,8 @@ const initialState = {
 function rootReducer (state = initialState, action){
     switch (action.type){
     case SING_IN:
-        return {...state}
+        return {...state, 
+            user: action.payload}
     case CREATE_USER: 
         return {...state}
     case GET_POKEMONS:

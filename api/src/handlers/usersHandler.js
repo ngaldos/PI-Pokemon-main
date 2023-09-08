@@ -62,15 +62,14 @@ const getUserByIdHandler = async (req, res)=>{
 }
 
 const authHandler = async (req, res)=>{
-    console.log('HOLA');
     const {mail, password} = req.body;
-    if (!mail || !password) res.status(400).send('Wrong or missing inputs.');
+    if (!mail || !password){
+        res.status(400).send('Wrong or missing inputs.');
+    }
     else{
         try {
-            console.log('Hasta aca 1');
-            const response = await auth(mail, password);
-            console.log(response);
-            if (response)   res.status(200).send('Mail and password matched correctly.');
+            const response = await auth(mail, password).then((data)=> data.dataValues);
+            if (response)   res.status(200).json(response);
             else    res.status(400).send(`Mail and password doesn't match.`);
         } catch (error) {
             res.status(500).send(error.message);    

@@ -25,19 +25,7 @@ export const RESET = 'RESET';
 
 
 
-export const singIn = (user)=>{
-    return async (dispatch) =>{
-        const response = await axios.get('http://localhost:3001/auth', user).catch((error)=>{
-            alert('Mail y/o contraseña incorrectos. xDDDDDDDDDDDDDDDDDD');
-            //alert(error.message);
-        });
-        return dispatch({
-            type: "SING_IN",
-            payload: response,
-        });
-    }
 
-}
 
 export const reset = (array)=>{
     return async (dispatch)=>{
@@ -136,6 +124,20 @@ export const addPokemon = (pokemon)=>{
             });
         } catch (error) {
             alert(error.message);
+        }
+    }
+}
+
+export const singIn = (user)=>{
+    return async (dispatch) =>{
+        try {
+            const response = await axios.post('http://localhost:3001/auth', user).then((data)=>data.data);
+            return dispatch({
+                type: "SING_IN",
+                payload: response,
+            });
+        } catch (error) {
+            alert(error?.response?.data);
         }
     }
 }

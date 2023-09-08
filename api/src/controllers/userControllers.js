@@ -40,13 +40,12 @@ const auth = async (mail, password)=>{
     try {
         const response = await User.findOne({where: {mail , password}})
         if (!response) return false;
-        else return true;
+        else return response;
     } catch (error) {
         const aux = await User.findOne({where: {mail}});
         if (!aux) throw new Error(`The email was wrong.`);
         else throw new Error(`The password didn't matched with the Email provided.`);
     }
-
 }
 
 module.exports = {createUser,
