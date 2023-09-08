@@ -39,7 +39,7 @@ sequelize.models = Object.fromEntries(capsEntries);
 
 // En sequelize.models están todos los modelos importados como propiedades
 // Para relacionarlos hacemos un destructuring
-const { Pokemon, Type, Fav, User } = sequelize.models;
+const { Pokemon, Type, Fav, User, Review } = sequelize.models;
 
 // Aca vendrian las relaciones
 
@@ -63,6 +63,12 @@ User.hasMany(Fav);
 Pokemon.hasMany(Fav);
 Fav.belongsTo(User, {timeStamps: false });
 Fav.belongsTo(Pokemon, { timeStamps: false });
+
+User.hasMany(Review);
+Pokemon.hasMany(Review);
+Review.belongsTo(User, {timeStamps: false});
+Review.belongsTo(Pokemon, {timeStamps: false});
+
 
 //Fav.belongsTo(User, { foreignKey: "userId", timeStamps: false });
 //Fav.belongsTo(Pokemon, { foreignKey: "pokemonId", timeStamps: false });
