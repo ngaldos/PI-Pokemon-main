@@ -1,4 +1,4 @@
-const {createReview, getReviews } = require(`../controllers/reviewsControllers`);
+const {createReview, getReviews, getUserReviews } = require(`../controllers/reviewsControllers`);
 
 const createReviewHandler = async (req, res)=>{
     const {mail, poke, score} = req.body;
@@ -14,16 +14,37 @@ const createReviewHandler = async (req, res)=>{
 }
 
 const getReviewsHandler = async (req, res)=>{
+    const {mail} = req.body;
     try {
-        const response = await getReviews();
-        res.status(200).json(response);
+        if (!mail){
+            const response = await getReviews();
+            res.status(200).json(response);
+        }else{
+            const response = await getUserReviews(mail);
+            res.status(200).json(response);
+        }
     } catch (error) {
         res.status(400).send(error.message);
+    }
+
+}
+
+const getUserReviewsHandler = async (req, res)=>{
+    const {mail} = req.body;
+    if (!mail) res.status(400).send(`Invalid or missing Email.`);
+    else{
+        try {
+            const response = await getUserReviews(mail);
+            res.status(200).json(response);
+        } catch (error) {
+            res.status(400).send(error.message);
+        }
     }
 }
 
 module.exports = {
     createReviewHandler,
     getReviewsHandler,
+    getUserReviewsHandler,
 
 };
