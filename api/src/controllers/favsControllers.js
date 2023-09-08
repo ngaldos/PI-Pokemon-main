@@ -28,7 +28,36 @@ const getAllFavs = async () =>{
     return response;
 }
 
+const getFavs = async (mail) =>{
+    console.log(1);
+    const user = await User.findOne({where: {mail}}).then((data)=>data.dataValues)
+    .catch(()=>{});
+    console.log(2);
+    if (!user) throw new Error(`No user was found with that mail.`);
+    else{
+        console.log(3);
+        const {id} = user;
+        console.log(id);
+        const response = await Fav.findAll({where: {UserId: id}});
+        console.log(response.length > 0);
+        if (response.length == 0) return false;
+        else return response;
+    }
+}
+
+const deleteFav = async (id)=>{
+    if (!id) throw new Error(`Invalid or missing ID.`);
+    else{
+        const response = await Fav.findOne({where: {id}});
+        const aux = await Fav.destroy({where: {id}});
+        return response;
+    }
+}
+
 module.exports = {
     addFav,
-    getAllFavs
+    getAllFavs,
+    getFavs,
+    deleteFav,
+    
 };
