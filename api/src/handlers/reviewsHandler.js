@@ -1,4 +1,4 @@
-const {createReview, getReviews, getUserReviews, deleteReview, getPokemonReviews } = require(`../controllers/reviewsControllers`);
+const {createReview, getReviews, getUserReviews, deleteReview, getPokemonReviews, getUserReviewsById } = require(`../controllers/reviewsControllers`);
 
 const createReviewHandler = async (req, res)=>{
     const {mail, poke, score} = req.body;
@@ -14,20 +14,24 @@ const createReviewHandler = async (req, res)=>{
 }
 
 const getReviewsHandler = async (req, res)=>{
-    const {mail, id} = req.body;
     try {
-        if (!mail && !id){
-            const response = await getReviews();
-            res.status(200).json(response);
-        }else{
+        const {mail, pokemon, user} = req.query;
+        if (!!mail || !!pokemon || !!user){
             if (mail){
                 const response = await getUserReviews(mail);
                 res.status(200).json(response);
             }
-            if (id){
-                const response = await getPokemonReviews(id);
+            if (pokemon){
+                const response = await getPokemonReviews(pokemon);
                 res.status(200).json(response);
             }
+            if (user){
+                const response = await getUserReviewsById(user);
+                res.status(200).json(response);
+            }
+        }else{
+            const response = await getReviews();
+            res.status(200).json(response);
         }
     } catch (error) {
         res.status(400).send(error.message);

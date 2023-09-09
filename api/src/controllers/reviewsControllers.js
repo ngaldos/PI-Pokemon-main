@@ -1,6 +1,8 @@
 const {Review, User, Pokemon} = require(`../db`);
 const axios = require(`axios`);
 
+const URL_BASE = `http://localhost:3001/`;
+
 const createReview = async (mail, poke, score)=>{
     if (!mail || !poke || !score) throw new Error(`Some inputs are wrong or missing.`);
     else{
@@ -18,8 +20,26 @@ const createReview = async (mail, poke, score)=>{
 }
 
 const getReviews = async ()=>{
-    const response = await Review.findAll();
+    const response = await Review.findAll({include: [{
+        model: Pokemon,
+        attributes: [],
+        through: {attributes: []},
+    },
+    {
+        model: User,
+        attributes: [],
+        through: {attributes: []},
+    }]
+});
     return response;
+}
+
+const getUserReviewsById = async (id)=>{
+    if (!id) throw new Error(`Invalid or missing ID.`);
+    else{
+        const response = await axios.get(`${URL_BASE}reviews/`).then((data)=>data.data);
+        return response;
+    }
 }
 
 const getUserReviews = async (mail)=>{
@@ -51,5 +71,6 @@ module.exports = {
     getUserReviews,
     getPokemonReviews,
     deleteReview,
+    getUserReviewsById,
 
 };
