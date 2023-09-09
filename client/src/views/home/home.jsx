@@ -128,19 +128,17 @@ const Home = ()=>{
                     </div>
                     
                     <div className={style.container}>
-                        {pokemonsCopy.length > 1 ? <>
-                            {pokemonsCopy?.slice(firstIndex,lastIndex).map(pokemon => {
+                        {pokemonsCopy?.length > 1 && pokemonsCopy?.slice(firstIndex,lastIndex).map(pokemon => {
                                 return(
                                     <Card key={pokemon.id} poke={pokemon}/>
                                 )} 
                             )}
-                        </> : <>
-                            {pokemonsCopy.map((pokemon)=>{
-                                return(
-                                    <Card key={pokemon.id} poke={pokemon}/>
-                                    );
-                            })}
-                        </>}
+                        {pokemonsCopy?.length == 1 && pokemonsCopy?.map((pokemon)=>{
+                            return(
+                                <Card key={pokemon.id} poke={pokemon}/>
+                                );
+                        })}
+                        {pokemonsCopy?.length == 0 && <img src='https://media.tenor.com/lmA7VALYIAsAAAAM/sad-pikachu.gif' alt='404 something went wrong'/>}
                     </div>
                         
                     <Pagination page={currentPage} setPage={setCurrentPage} maximus={max}/>

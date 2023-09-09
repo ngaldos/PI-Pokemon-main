@@ -22,8 +22,6 @@ const Detail = ()=>{
         };
     }, [dispatch]);
 
-
-    console.log(detail);
     return(
         <div>
             <div className={style.nav}>
