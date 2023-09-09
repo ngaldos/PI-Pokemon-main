@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import {createUser} from '../../../redux/actions';
+import {createUser, singIn} from '../../../redux/actions';
 
 import './formSingUp.modules.css';
 
@@ -59,6 +59,7 @@ const FormSingUp = ()=>{
         event.preventDefault();
         try {
             dispatch(createUser(input));
+            dispatch(singIn({mail: input.mail, password: input.password}));
             setInput({
                 name: '',
                 lastName: '',
