@@ -49,8 +49,8 @@ const FormSingIn = ()=>{
                 mail: '',
                 password: '',
             });
-            //navigate('/home');
-            //alert(`Logged in successfully.`);
+            navigate('/home');
+            alert(`Logged in successfully.`)
         } catch (error) {
             alert(error.message);
         }

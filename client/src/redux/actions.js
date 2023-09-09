@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 export const SING_IN = 'SING_IN';
+export const SING_OUT = 'SING_OUT';
 
 export const GET_POKEMONS = 'GET_POKEMONS';
 export const GET_BY_NAME = 'GET_BY_NAME';
@@ -25,7 +26,14 @@ export const RESET = 'RESET';
 
 
 
-
+export const singOut = ()=>{
+    return async (dispatch)=>{
+        return dispatch({
+            type: "SING_OUT",
+            payload: null,
+        });
+    }
+}
 
 export const reset = (array)=>{
     return async (dispatch)=>{

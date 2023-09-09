@@ -21,6 +21,7 @@ import Loader from '../../components/loader/loader.jsx';
 const Home = ()=>{
     const dispatch = useDispatch();
 
+    const user = useSelector((state)=> state.user);
     
     const originals = useSelector((state)=> state.originals);
     const allPokemons = useSelector((state)=>state.pokemons);
@@ -103,12 +104,15 @@ const Home = ()=>{
         dispatch(getTypes())
     }, [dispatch]);
 
+    const handleSingOut = ()=>{
+
+    }
     return(
         <div className={allPokemons?.length > 0? style.home: style.loader}>
             {allPokemons.length > 0 ? 
                 <div >
                     <div className={style.navContainer}>
-                        <Nav/>
+                        <Nav />
                         <div className={style.search}>
                             <SearchBar handleChange={handleChange} handleSubmit={handleSubmit} 
                             searchString={searchString} setCurrentPage={setCurrentPage}/>

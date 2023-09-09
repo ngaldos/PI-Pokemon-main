@@ -5,7 +5,6 @@ import { useSelector } from 'react-redux';
 
 const singIn = ()=>{
     //const user = useSelector((state)=>state.user);
-
     return (
         <div>
             <Nav/>
