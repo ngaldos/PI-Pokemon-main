@@ -11,7 +11,8 @@ const Reviews = ()=>{
     const dispatch = useDispatch();
 
     useEffect(()=>{
-        dispatch(getUserReviews(user?.mail));
+        if(user?.mail)  dispatch(getUserReviews(user?.mail));
+        return;
     }, [dispatch]);
 
 
