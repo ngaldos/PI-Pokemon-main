@@ -2,15 +2,24 @@ import {Link} from 'react-router-dom';
 import style from './nav.module.css';
 import {useSelector, useDispatch} from 'react-redux';
 import { singOut } from '../../redux/actions';
+import { useState } from 'react';
 
 export default function (){
 
+    const [open, setOpen] = useState(false);
     const user = useSelector((state)=>state.user);
     const dispatch = useDispatch();
 
     const handleSingOut = (e)=>{
         e.preventDefault();
         dispatch(singOut());
+    }
+    const handleClick = (e)=>{
+        e.preventDefault();
+        if (open)   
+            setOpen(false);
+        else 
+            setOpen(true);
     }
 
     return(
@@ -28,7 +37,7 @@ export default function (){
                 <Link to= '/about'>
                     <p>About</p>
                 </Link>
-                {!!user?.mail ? <></> : <>
+                {!!user?.mail ? <> </> : <>
                     <Link to= '/singUp'>
                         <p>Sing Up</p>
                     </Link>
@@ -36,16 +45,22 @@ export default function (){
                         <p>Sing In</p>
                     </Link>
                 </>}
-            <div>
-                {!!user?.mail ? <>
-                    <h5>{user?.name[0].toUpperCase()}. {user?.lastName}</h5>
-                    <h5>{user?.mail}</h5>
-                    <div className='div--btn'>
-                        <button onClick={handleSingOut}>Sing out</button>
-                    </div>
-                </> : <> </>}
+                <div>
+                    {!!user?.mail ? <>
+                        <div>
+                            <button onClick={handleClick}>{user?.name[0].toUpperCase()}. {user?.lastName}</button>
+                        </div>
+                    </> : <> </>}
+                </div>
             </div>
-            </div>
+            {(user?.mail && open) && <> 
+                <h3>{user?.mail}</h3>
+                    <Link to='/myProfile'><p>My profile</p></Link>
+                    <Link to='/reviews'><p>Reviews</p></Link>
+                <div className='div--btn'>
+                    <button onClick={handleSingOut}>Sing out</button>
+                </div>
+            </>}
         </>
     );
 }
