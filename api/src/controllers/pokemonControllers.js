@@ -120,8 +120,23 @@ const getPokemonByName = async (name)=>{
 
 const getPokemonById = async (id)=>{
     if (isNaN(id)){
-        const pokemonDb = await Pokemon.findOne({where: {id: id}});
-        return pokemonDb;
+        const pokeAux = await Pokemon.findByPk(id, {include: [{
+            model: Type,
+            attributes: ["name"],
+            through: {attributes: []}
+        }]})
+        .then((data)=>{
+            if (data !== null) 
+                return data.dataValues;
+            else 
+                return data});
+
+        let pokeDb = false;
+        if (pokeAux !== null){
+            pokeDb = infoCleanerDb(pokeAux)
+        }
+        
+        return pokeDb;
     }else{
         const pokemonApi = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`).then((data)=>infoCleaner(data.data));
         return pokemonApi;
