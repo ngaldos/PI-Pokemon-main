@@ -79,6 +79,21 @@ const infoCleaner = (p)=>{
             });
 }
 
+const infoCleanerDb = (poke)=>{
+    return  {
+        id: poke?.id,
+        name: poke?.name,
+        img: poke?.img,
+        health: poke?.health,
+        attack: poke?.attack,
+        defense: poke?.defense,
+        speed: poke?.speed,
+        height: poke?.height,
+        weight: poke?.weight,
+        types: poke.Types.map((e)=>e.dataValues.name),
+    };
+}
+
 const getPokemonByName = async (name)=>{
     const pokeAux = await Pokemon.findOne({include: [{
             model: Type,
@@ -86,21 +101,14 @@ const getPokemonByName = async (name)=>{
             through: {attributes: []}
         }],
         where: {name: name},
-    });
+    }).then((data)=>{
+        if (data !== null) return data.dataValues;
+        else return data})
+    .catch(()=>{});
+
     let pokeDb = false;
     if (pokeAux !== null){
-        pokeDb = {
-            id: pokeAux?.id,
-            name: pokeAux?.name,
-            img: pokeAux?.img,
-            health: pokeAux?.health,
-            attack: pokeAux?.attack,
-            defense: pokeAux?.defense,
-            speed: pokeAux?.speed,
-            height: pokeAux?.height,
-            weight: pokeAux?.weight,
-            types: pokeAux.Types.map((e)=>e.dataValues),
-        };
+        pokeDb = infoCleanerDb(pokeAux)
     }
     const pokeApi = await axios.get(`https://pokeapi.co/api/v2/pokemon/${name}`).then((data)=> infoCleaner(data.data)).catch(()=>{});
     
@@ -108,7 +116,6 @@ const getPokemonByName = async (name)=>{
     else    if (!!pokeApi) return [pokeApi];
     else    if (!!pokeDb) return [pokeDb];
     else   throw new Error('The Pokemon dosent exist');
-    
 }
 
 const getPokemonById = async (id)=>{
