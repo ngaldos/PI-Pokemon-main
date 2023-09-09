@@ -67,9 +67,15 @@ export function getPokemons (){
 //! getByName roto
 export function getByName (name){
     return async function (dispatch){
-        const response = await axios.get(`http://localhost:3001/pokemons/?name=${name}`).catch(()=>{
+        const response = await axios.get(`http://localhost:3001/pokemons/?name=${name}`).then((data)=>data.data)
+        .catch(()=>{
             alert('Request failed');
         })
+        return dispatch({
+            type: "GET_BY_NAME",
+            payload: response
+        });
+        /*
         if (Array.isArray(response.data)){
             const aux = response?.data.filter((poke)=>Object.values(poke).length > 0);
             return dispatch({
@@ -83,6 +89,7 @@ export function getByName (name){
                 payload: aux,
             });
         }
+        */
     }
 }
 

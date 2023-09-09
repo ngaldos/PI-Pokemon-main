@@ -80,11 +80,33 @@ const infoCleaner = (p)=>{
 }
 
 const getPokemonByName = async (name)=>{
-    const pokeDb = await Pokemon.findOne({where: {name: name}});
+    const pokeAux = await Pokemon.findOne({include: [{
+            model: Type,
+            attributes: ["name"],
+            through: {attributes: []}
+        }],
+        where: {name: name},
+    });
+    let pokeDb = false;
+    if (pokeAux !== null){
+        pokeDb = {
+            id: pokeAux?.id,
+            name: pokeAux?.name,
+            img: pokeAux?.img,
+            health: pokeAux?.health,
+            attack: pokeAux?.attack,
+            defense: pokeAux?.defense,
+            speed: pokeAux?.speed,
+            height: pokeAux?.height,
+            weight: pokeAux?.weight,
+            types: pokeAux.Types.map((e)=>e.dataValues),
+        };
+    }
     const pokeApi = await axios.get(`https://pokeapi.co/api/v2/pokemon/${name}`).then((data)=> infoCleaner(data.data)).catch(()=>{});
+    
     if ( (!!pokeApi) && (!!pokeDb) )    return [pokeDb, pokeApi];
-    else    if (!!pokeApi) return pokeApi;
-    else    if (!!pokeDb) return pokeDb;
+    else    if (!!pokeApi) return [pokeApi];
+    else    if (!!pokeDb) return [pokeDb];
     else   throw new Error('The Pokemon dosent exist');
     
 }

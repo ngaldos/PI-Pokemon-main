@@ -104,9 +104,6 @@ const Home = ()=>{
         dispatch(getTypes())
     }, [dispatch]);
 
-    const handleSingOut = ()=>{
-
-    }
     return(
         <div className={allPokemons?.length > 0? style.home: style.loader}>
             {allPokemons.length > 0 ? 
@@ -131,12 +128,21 @@ const Home = ()=>{
                     </div>
                     
                     <div className={style.container}>
-                    {pokemonsCopy?.slice(firstIndex,lastIndex).map(pokemon => {
-                            return(
-                                <Card key={pokemon.id} poke={pokemon}/>
-                            )} 
-                        )}
+                        {pokemonsCopy.length > 1 ? <>
+                            {pokemonsCopy?.slice(firstIndex,lastIndex).map(pokemon => {
+                                return(
+                                    <Card key={pokemon.id} poke={pokemon}/>
+                                )} 
+                            )}
+                        </> : <>
+                            {pokemonsCopy.map((pokemon)=>{
+                                return(
+                                    <Card key={pokemon.id} poke={pokemon}/>
+                                    );
+                            })}
+                        </>}
                     </div>
+                        
                     <Pagination page={currentPage} setPage={setCurrentPage} maximus={max}/>
             </div> : <div className={style.loader}>
                 <Loader/>
