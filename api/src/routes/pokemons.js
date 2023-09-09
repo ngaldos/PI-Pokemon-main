@@ -6,13 +6,9 @@ const {createPokemonHandler, getPokemonsHandler, getPokemonByIdHandler, getPokem
 const router= Router();
 
 router.get('/', getPokemonsHandler);
-
 router.get('/:id', getPokemonByIdHandler);
 
 router.delete(`/`, deletePokemonHandler);
-//router.get('/?name', getPokemonByNameHandler);
-
-
 
 router.post('/', createPokemonHandler);
 
