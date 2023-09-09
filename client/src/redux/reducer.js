@@ -22,8 +22,6 @@ function rootReducer (state = initialState, action){
     case SING_IN:
         return {...state, 
             user: action.payload};
-    case CREATE_USER: 
-        return {...state}
     case GET_POKEMONS:
         return {
             ...state,
@@ -45,9 +43,6 @@ function rootReducer (state = initialState, action){
     case CLEAN_DETAIL:
         return{...state, detail: {}}
         
-        
-    case ADD_POKEMON:
-        return {...state}
         
     case ORDER_BY_NAME:
         return {...state, pokemonsCopy: action.payload, pokemons: action.payload}

@@ -135,7 +135,7 @@ const getPokemonById = async (id)=>{
         if (pokeAux !== null){
             pokeDb = infoCleanerDb(pokeAux)
         }
-        
+
         return pokeDb;
     }else{
         const pokemonApi = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`).then((data)=>infoCleaner(data.data));
@@ -143,5 +143,15 @@ const getPokemonById = async (id)=>{
     }
 }
 
+const deletePokemon = async (id)=>{
+    if (!id) throw new Error(`Invalid or missing ID.`);
+    const response = await Pokemon.findByPk(id);
+    if (response !== null){
+        response.destroy();
+        return true;
+    }else 
+        return false;
+}
 
-module.exports= {createPokemonDB, getPokemonById, getPokemons, getPokemonByName};
+
+module.exports= {createPokemonDB, getPokemonById, getPokemons, getPokemonByName, deletePokemon};

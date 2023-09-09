@@ -1,5 +1,5 @@
 const axios = require('axios');
-const {createPokemonDB, getPokemonById, getPokemons, getPokemonByName} = require('../controllers/pokemonControllers');
+const {createPokemonDB, getPokemonById, getPokemons, getPokemonByName, deletePokemon} = require('../controllers/pokemonControllers');
 
 
 const getPokemonsHandler =  async (req, res)=>{
@@ -56,12 +56,31 @@ const createPokemonHandler = async (req, res)=>{
 }
 
 
-
+const deletePokemonHandler = async (req, res)=>{
+    const {id} = req.body;
+    if (!id) res.status(400).send(`Invalid or missing ID.`);
+    else{
+        if (isNaN(id)){
+            try {
+                const response = await deletePokemon(id);
+                if (response) 
+                    res.status(200).send(`Pokemon deleted successfully.`);
+                else    
+                    res.status(400).send(`Something happened and we couldn't delete correctly the Pokemon.`);
+            } catch (error) {
+                res.status(500).send(error.message);
+            }
+        }else 
+            res.status(400).send(`Invalid ID. Must be an UUID (Must be a DBB pokemon)`);
+    }
+}
 
 
 module.exports = {
     getPokemonsHandler,
     createPokemonHandler, 
     getPokemonByIdHandler,
-    getPokemonByNameHandler
+    getPokemonByNameHandler,
+    deletePokemonHandler,
+
     };

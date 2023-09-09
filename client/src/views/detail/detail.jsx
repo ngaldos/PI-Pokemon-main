@@ -1,15 +1,16 @@
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { getDetail } from '../../redux/actions';
 
 import style from './detail.module.css';
 import Nav from '../../components/nav/nav';
 import { useSelector, useDispatch } from 'react-redux';
-import { cleanDetail } from '../../redux/actions';
+import { cleanDetail,  deletePokemon, getPokemons} from '../../redux/actions';
 
 const Detail = ()=>{
     const dispatch= useDispatch();
+    const navigate = useNavigate();
 
     const {id} = useParams();
     //const {name, img, health, attack, defense, speed, height, weight}= data;
@@ -22,6 +23,17 @@ const Detail = ()=>{
         };
     }, [dispatch]);
 
+    const handleDelete = (e)=>{
+        e.preventDefault();
+        if (isNaN(id)){
+            dispatch(deletePokemon(id)).catch((error)=> {alert(error.message); return error});
+            dispatch(cleanDetail());
+            dispatch(getPokemons());
+            navigate(`/home`);
+            alert(`Pokemon deleted successfully.`);
+        }else   alert(`Invalid ID for deleting.`);
+    }
+
     return(
         <div>
             <div className={style.nav}>
@@ -29,6 +41,7 @@ const Detail = ()=>{
             </div>
             <div className={style.higher}>
                 <div className={style.text}>
+                    {isNaN(id) && <button className='X--btn' onClick={handleDelete}>X</button>}
                     <img src={detail?.img} alt='IMG' className={style.img}/>
                     <h2 className={style.subtitle}>ID: {detail?.id}</h2>
                     <h2 className={style.subtitle}>Name: {detail?.name}</h2>

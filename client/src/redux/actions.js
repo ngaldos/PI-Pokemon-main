@@ -10,6 +10,7 @@ export const CLEAN_DETAIL = 'CLEAN_DETAIL';
 export const GET_TYPES = 'GET_TYPES';
 
 export const ADD_POKEMON= 'ADD_POKEMON';
+export const DELETE_POKEMON = "DELETE_POKEMON";
 export const CREATE_USER = "CREATE_USER";
 
 export const ORDER_BY_NAME= 'ORDER_BY_NAME';
@@ -25,6 +26,18 @@ export const FILTER_BY_TYPE = 'FILTER_BY_TYPE';
 export const RESET = 'RESET';
 
 
+export const deletePokemon = (id)=>{
+    return async (dispatch)=>{
+        try {    
+            const response = await axios.delete(`http://localhost:3001/pokemons`, {data: {id}});
+            return dispatch({
+                type: "DELETE_POKEMON",
+            });
+        } catch (error) {
+            alert(error.message);
+        }
+    }
+}
 
 export const singOut = ()=>{
     return async (dispatch)=>{
