@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import {createUser, singIn} from '../../../redux/actions';
+import {createUser, signIn} from '../../../redux/actions';
 
-import './formSingUp.modules.css';
+import './formSignUp.modules.css';
 
-const FormSingUp = ()=>{
+const FormSignUp = ()=>{
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
@@ -59,7 +59,7 @@ const FormSingUp = ()=>{
         event.preventDefault();
         try {
             dispatch(createUser(input));
-            dispatch(singIn({mail: input.mail, password: input.password}));
+            dispatch(signIn({mail: input.mail, password: input.password}));
             setInput({
                 name: '',
                 lastName: '',
@@ -78,7 +78,7 @@ const FormSingUp = ()=>{
 
     return (
         <>
-            <form className="form--singUp" onSubmit={submitHandler}>
+            <form className="form--signUp" onSubmit={submitHandler}>
                 <div className='div--form'>
                     <label htmlFor="name" className="label">Name: </label>
                     <input className="input" type="text" name="name" onChange={handleChange} value={input.value}/>
@@ -114,4 +114,4 @@ const FormSingUp = ()=>{
     );
 }
 
-export default FormSingUp;
+export default FormSignUp;

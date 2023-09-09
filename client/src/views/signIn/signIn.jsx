@@ -1,4 +1,4 @@
-import FormSingIn from '../../components/form/singIn/formSingIn'
+import FormSignIn from '../../components/form/signIn/formSignIn'
 import Nav from '../../components/nav/nav';
 import { useSelector } from 'react-redux';
 
@@ -9,7 +9,7 @@ const singIn = ()=>{
         <div>
             <Nav/>
             <>
-                <FormSingIn/>
+                <FormSignIn/>
             </>
         </div>
     );

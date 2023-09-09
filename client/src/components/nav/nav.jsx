@@ -1,7 +1,7 @@
 import {Link} from 'react-router-dom';
 import style from './nav.module.css';
 import {useSelector, useDispatch} from 'react-redux';
-import { singOut } from '../../redux/actions';
+import { signOut } from '../../redux/actions';
 import { useState } from 'react';
 
 export default function (){
@@ -10,9 +10,9 @@ export default function (){
     const user = useSelector((state)=>state.user);
     const dispatch = useDispatch();
 
-    const handleSingOut = (e)=>{
+    const handleSignOut = (e)=>{
         e.preventDefault();
-        dispatch(singOut());
+        dispatch(signOut());
     }
     const handleClick = (e)=>{
         e.preventDefault();
@@ -38,11 +38,11 @@ export default function (){
                     <p>About</p>
                 </Link>
                 {!!user?.mail ? <> </> : <>
-                    <Link to= '/singUp'>
-                        <p>Sing Up</p>
+                    <Link to= '/signUp'>
+                        <p>Sign Up</p>
                     </Link>
-                    <Link to= '/singIn'>
-                        <p>Sing In</p>
+                    <Link to= '/signIn'>
+                        <p>Sign In</p>
                     </Link>
                 </>}
                 <div>
@@ -58,7 +58,7 @@ export default function (){
                     <Link to='/myProfile'><p>My profile</p></Link>
                     <Link to='/reviews'><p>Reviews</p></Link>
                 <div className='div--btn'>
-                    <button onClick={handleSingOut}>Sing out</button>
+                    <button onClick={handleSignOut}>Sign out</button>
                 </div>
             </>}
         </>

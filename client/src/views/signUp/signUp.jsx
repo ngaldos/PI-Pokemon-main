@@ -1,4 +1,4 @@
-import FormSingUp from '../../components/form/singUp/formSingUp';
+import FormSignUp from '../../components/form/signUp/formSignUp';
 import Nav from '../../components/nav/nav';
 
 const SingUp = ()=>{
@@ -6,7 +6,7 @@ const SingUp = ()=>{
         <div>
             <Nav/>
             <>
-                <FormSingUp/>
+                <FormSignUp/>
             </>
         </div>
     );

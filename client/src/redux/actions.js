@@ -1,7 +1,7 @@
 import axios from 'axios';
 
-export const SING_IN = 'SING_IN';
-export const SING_OUT = 'SING_OUT';
+export const SIGN_IN = 'SIGN_IN';
+export const SIGN_OUT = 'SIGN_OUT';
 
 export const ADD_REVIEW = "ADD_REVIEW";
 
@@ -43,10 +43,10 @@ export const deletePokemon = (id)=>{
     }
 }
 
-export const singOut = ()=>{
+export const signOut = ()=>{
     return async (dispatch)=>{
         return dispatch({
-            type: "SING_OUT",
+            type: "SIGN_OUT",
             payload: null,
         });
     }
@@ -163,12 +163,12 @@ export const addPokemon = (pokemon)=>{
     }
 }
 
-export const singIn = (user)=>{
+export const signIn = (user)=>{
     return async (dispatch) =>{
         try {
             const response = await axios.post(`${URL_BASE}auth`, user).then((data)=>data.data);
             return dispatch({
-                type: "SING_IN",
+                type: "SIGN_IN",
                 payload: response,
             });
         } catch (error) {
