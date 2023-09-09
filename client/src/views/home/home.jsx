@@ -88,9 +88,9 @@ const Home = ()=>{
     const handleSubmit = (e)=>{
         e.preventDefault();
         if (searchString !== ''){
+            dispatch(getByName(searchString));
             setSearchString('');
             setCurrentPage(1);
-            dispatch(getByName(searchString));
         }else handleReset();
     }
 
