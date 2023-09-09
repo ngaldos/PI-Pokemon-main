@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { getDetail } from '../../redux/actions';
+import { addReview, getDetail } from '../../redux/actions';
 
 import style from './detail.module.css';
 import Nav from '../../components/nav/nav';
@@ -12,9 +12,14 @@ const Detail = ()=>{
     const dispatch= useDispatch();
     const navigate = useNavigate();
 
+    const [score, setScore] = useState(1);
+    const [error, setError] = useState('');
+
     const {id} = useParams();
     //const {name, img, health, attack, defense, speed, height, weight}= data;
     const detail = useSelector((state)=>state.detail);
+    const user = useSelector((state)=>state.user);
+
     useEffect(()=>{
         dispatch(getDetail(id));
 
@@ -32,6 +37,51 @@ const Detail = ()=>{
             navigate(`/home`);
             alert(`Pokemon deleted successfully.`);
         }else   alert(`Invalid ID for deleting.`);
+    }
+    
+    const handleReview = (e)=>{
+        e.preventDefault();
+        if (isNaN(id)){
+            //navigate(`/`);
+            // Aca hacer el form de la Review del Pokemon
+        }
+    }
+
+    const submitHandler = async (e)=>{
+        e.preventDefault();
+        try {
+            dispatch(addReview({
+                mail: user?.mail,
+                poke: detail?.id,
+                score: score,
+            }))
+            .catch((error)=>{
+                alert(error.message);
+                return error;   
+            });
+            setScore(1);
+            setError('');
+            alert(`Review created successfully.`);
+        } catch (error) {
+            console.log(error);
+            alert(error.message);
+        }
+
+    }
+
+    const validate = (input)=>{
+        let error = '';
+        if (!input) 
+            error= `This input is mandatory.`;
+        else if (!(/^\d+$/).test(input)) 
+            error = `This input must have positive and integer numbers only (from 1 to 10).`;
+        
+        return error;
+    }
+    const handleChange = (e)=>{
+        e.preventDefault();
+        setScore(e.target.value);
+        setError(validate(e.target.value));
     }
 
     return(
@@ -55,9 +105,23 @@ const Detail = ()=>{
                     {detail.weight == 0 ? <></> : 
                     <h3 className={style.subtitle}>Weight: {detail?.weight}</h3>}
                     <div className={style.types}>
-                    <h3 className={style.subtitle}>Types: </h3>
-                    {detail?.types?.map((e)=><p className={style.subtitle}>{e}</p>)}
+                        <h3 className={style.subtitle}>Types: </h3>
+                        {detail?.types?.map((e)=><p className={style.subtitle}>{e}</p>)}
                     </div>
+                    <>  
+                        {user?.mail && (isNaN(id)) && <div>
+                            <form className='form--review' onSubmit={submitHandler}>
+                                <label htmlFor='score' className='label'>Score: </label>
+                                <input className='input' type='number' name='score' onChange={handleChange}></input>
+                                <span className='span==form'>{error}</span>
+                                {error ? <>
+                                    <h3>Errors founded.</h3>
+                                </> : <>
+                                    <button className='review--btn' type='submit'>Review Pokemon</button>
+                                </>}
+                            </form>
+                        </div>}
+                    </>
                 </div>
             </div>
         </div>

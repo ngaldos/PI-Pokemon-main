@@ -3,6 +3,8 @@ import axios from 'axios';
 export const SING_IN = 'SING_IN';
 export const SING_OUT = 'SING_OUT';
 
+export const ADD_REVIEW = "ADD_REVIEW";
+
 export const GET_POKEMONS = 'GET_POKEMONS';
 export const GET_BY_NAME = 'GET_BY_NAME';
 export const GET_DETAIL = 'GET_DETAIL';
@@ -23,13 +25,15 @@ export const FILTER_BOTH = 'FILTER_BOTH';
 export const FILTER_BY_TYPE = 'FILTER_BY_TYPE';
 
 
+const URL_BASE = "http://localhost:3001/";
+
 export const RESET = 'RESET';
 
 
 export const deletePokemon = (id)=>{
     return async (dispatch)=>{
         try {    
-            const response = await axios.delete(`http://localhost:3001/pokemons`, {data: {id}});
+            const response = await axios.delete(`${URL_BASE}pokemons`, {data: {id}});
             return dispatch({
                 type: "DELETE_POKEMON",
             });
@@ -59,7 +63,7 @@ export const reset = (array)=>{
 
 export const getTypes = ()=>{
     return async (dispatch)=>{
-        const response= await axios.get(`http://localhost:3001/types`);
+        const response= await axios.get(`${URL_BASE}types`);
         return dispatch({
             type: "GET_TYPES",
             payload: response.data
@@ -69,7 +73,7 @@ export const getTypes = ()=>{
 
 export function getPokemons (){
     return async function (dispatch){
-        const response = await axios.get(`http://localhost:3001/pokemons`);
+        const response = await axios.get(`${URL_BASE}pokemons`);
         return dispatch({
             type: "GET_POKEMONS",
             payload: response.data
@@ -80,7 +84,7 @@ export function getPokemons (){
 //! getByName roto
 export function getByName (name){
     return async function (dispatch){
-        const response = await axios.get(`http://localhost:3001/pokemons/?name=${name}`).then((data)=>data.data)
+        const response = await axios.get(`${URL_BASE}pokemons/?name=${name}`).then((data)=>data.data)
         .catch(()=>{
             alert(`No pokemon was found with that name.`);
             return dispatch({
@@ -99,7 +103,7 @@ export function getByName (name){
 
 export function getDetail(id){
     return async (dispatch)=>{
-        const response = await axios.get(`http://localhost:3001/pokemons/${id}`);
+        const response = await axios.get(`${URL_BASE}pokemons/${id}`);
         return dispatch({
             type: "GET_DETAIL",
             payload: response.data,
@@ -119,9 +123,23 @@ export const cleanDetail = ()=>{
 export const createUser = (user)=>{
     return async (dispatch) =>{
         try {
-            const response = await axios.post(`http://localhost:3001/users/`, user);
+            const response = await axios.post(`${URL_BASE}users/`, user);
             return dispatch({
                 type: 'CREATE_USER',
+                payload: response,
+            });
+        } catch (error) {
+            alert(error.message);
+        }
+    }
+}
+
+export const addReview = (body)=>{
+    return async (dispatch) =>{
+        try {
+            const response = await axios.post(`${URL_BASE}reviews`, body);
+            return dispatch({
+                type: "ADD_REVIEW",
                 payload: response,
             });
         } catch (error) {
@@ -134,7 +152,7 @@ export const addPokemon = (pokemon)=>{
     
     return async (dispatch) =>{
         try {
-            const response= await axios.post(`http://localhost:3001/pokemons/`, pokemon);
+            const response= await axios.post(`${URL_BASE}pokemons/`, pokemon);
             return dispatch({
                 type: "ADD_POKEMON",
                 payload: response,
@@ -148,7 +166,7 @@ export const addPokemon = (pokemon)=>{
 export const singIn = (user)=>{
     return async (dispatch) =>{
         try {
-            const response = await axios.post('http://localhost:3001/auth', user).then((data)=>data.data);
+            const response = await axios.post(`${URL_BASE}auth`, user).then((data)=>data.data);
             return dispatch({
                 type: "SING_IN",
                 payload: response,
