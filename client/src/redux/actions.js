@@ -24,11 +24,28 @@ export const FILTER_CLOUD= 'FILTER_CLOUD';
 export const FILTER_BOTH = 'FILTER_BOTH';
 export const FILTER_BY_TYPE = 'FILTER_BY_TYPE';
 
+export const GET_USER_REVIEWS = "GET_USER_REVIEWS";
 
 const URL_BASE = "http://localhost:3001/";
 
 export const RESET = 'RESET';
 
+export const getUserReviews = (mail)=>{
+    return async (dispatch)=>{
+        try {
+            if (!mail) alert(`Invalid or missing Email.`);
+            else{
+                const response = await axios.get(`${URL_BASE}reviews?mail=${mail}`).then((data)=>data.data);
+                return dispatch({
+                    type: "GET_USER_REVIEWS",
+                    payload: response,
+                });
+            }
+        } catch (error) {
+            alert(error);
+        }
+    }
+}
 
 export const deletePokemon = (id)=>{
     return async (dispatch)=>{
