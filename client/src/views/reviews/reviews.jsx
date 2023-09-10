@@ -1,12 +1,15 @@
 import { useEffect } from "react";
 import {useSelector, useDispatch} from 'react-redux';
+import { useNavigate } from "react-router-dom";
 
-import { getUserReviews } from "../../redux/actions";
+import { getUserReviews, deleteReview } from "../../redux/actions";
 
 import ReviewCard from "../../components/reviewCard/reviewCard";
 import Nav from '../../components/nav/nav';
 
 const Reviews = ()=>{
+
+    const navigate = useNavigate();
 
     const user = useSelector((state)=> state.user);
 
@@ -18,9 +21,15 @@ const Reviews = ()=>{
         return;
     }, [dispatch]);
 
-    const searchPokemon = ()=>{
-
+    const handleDelete = (e)=>{
+        e.preventDefault();
+        dispatch(deleteReview(e.target.name));
+        alert(`Review with ID : ${e.target.name} deleted successfully.`);
+        dispatch(getUserReviews(user?.mail));
+        navigate(`/reviews`);
     }
+
+    let i= 0;
 
     return (
         <>
@@ -30,6 +39,8 @@ const Reviews = ()=>{
                     {user.reviews.map((e)=>{
                         return (
                             <>
+                                <h3>{++i}</h3>
+                                <button type="submit" name={e?.id} onClick={handleDelete} >Delete review</button>
                                 <ReviewCard review={e}/>
                             </>
                         );

@@ -47,6 +47,19 @@ export const getUserReviews = (mail)=>{
     }
 }
 
+export const deleteReview = (id)=>{
+    return async (dispatch)=>{
+        try {    
+            const response = await axios.delete(`${URL_BASE}reviews`, {data: {id}});
+            return dispatch({
+                type: "DELETE_REVIEW",
+            });
+        } catch (error) {
+            alert(error);
+        }
+    }
+}
+
 export const deletePokemon = (id)=>{
     return async (dispatch)=>{
         try {    
