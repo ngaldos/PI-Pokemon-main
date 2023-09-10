@@ -62,6 +62,7 @@ const deletePokemonHandler = async (req, res)=>{
     else{
         if (isNaN(id)){
             try {
+                console.log(1);
                 const response = await deletePokemon(id);
                 if (response) 
                     res.status(200).send(`Pokemon deleted successfully.`);
