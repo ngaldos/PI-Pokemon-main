@@ -3,11 +3,14 @@ import {useSelector, useDispatch} from 'react-redux';
 
 import { getUserReviews } from "../../redux/actions";
 
+import ReviewCard from "../../components/reviewCard/reviewCard";
 import Nav from '../../components/nav/nav';
 
 const Reviews = ()=>{
 
     const user = useSelector((state)=> state.user);
+
+    
     const dispatch = useDispatch();
 
     useEffect(()=>{
@@ -15,7 +18,9 @@ const Reviews = ()=>{
         return;
     }, [dispatch]);
 
+    const searchPokemon = ()=>{
 
+    }
 
     return (
         <>
@@ -25,8 +30,7 @@ const Reviews = ()=>{
                     {user.reviews.map((e)=>{
                         return (
                             <>
-                                <h4>{e.id}</h4>
-                                <p>{e.score}</p>
+                                <ReviewCard review={e}/>
                             </>
                         );
                     })}

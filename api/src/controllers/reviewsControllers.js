@@ -21,10 +21,15 @@ const createReview = async (mail, poke, score)=>{
 const infoCleanerDb = async (info)=>{
     const mappedInfo = await info.map(async (e)=>{
         const user = await User.findByPk(e.UserId);
+        const pokemon = await Pokemon.findByPk(e.PokemonId, {include: [{
+            model: Type,
+            attributes: ["name"],
+            through: {attributes: []},
+        }],});
         return {
             id: e?.dataValues?.id,
             score: e?.dataValues?.score,
-            PokemonId: e?.dataValues?.PokemonId,
+            pokemon,
             user: {
                 name: user?.dataValues?.name,
                 lastName: user?.dataValues?.lastName,
