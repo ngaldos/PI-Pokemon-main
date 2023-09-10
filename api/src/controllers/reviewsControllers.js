@@ -1,4 +1,4 @@
-const {Review, User, Pokemon} = require(`../db`);
+const {Review, User, Pokemon, Type} = require(`../db`);
 const axios = require(`axios`);
 
 const URL_BASE = `http://localhost:3001/`;
@@ -20,18 +20,22 @@ const createReview = async (mail, poke, score)=>{
 }
 
 const getReviews = async ()=>{
-    const response = await Review.findAll({include: [{
-        model: Pokemon,
-        attributes: [],
-        through: {attributes: []},
-    },
-    {
-        model: User,
-        attributes: [],
-        through: {attributes: []},
-    }]
-});
-    return response;
+
+    const aux = await Review.findAll();
+    const mappedInfo = await aux.map(async (e)=>{
+        const user = await User.findByPk(e.UserId);
+        return {
+            id: e?.dataValues?.id,
+            score: e?.dataValues?.score,
+            PokemonId: e?.dataValues?.PokemonId,
+            user: {
+                name: user?.dataValues?.name,
+                lastName: user?.dataValues?.lastName,
+            },
+        };
+    });
+    let promises = Promise.all(mappedInfo).then((e)=>e);
+    return promises;
 }
 
 const getUserReviewsById = async (id)=>{
