@@ -1,7 +1,6 @@
 const {Review, User, Pokemon, Type} = require(`../db`);
 const axios = require(`axios`);
 
-const URL_BASE = `http://localhost:3001/`;
 
 const createReview = async (mail, poke, score)=>{
     if (!mail || !poke || !score) throw new Error(`Some inputs are wrong or missing.`);
@@ -19,10 +18,8 @@ const createReview = async (mail, poke, score)=>{
     }
 }
 
-const getReviews = async ()=>{
-
-    const aux = await Review.findAll();
-    const mappedInfo = await aux.map(async (e)=>{
+const infoCleanerDb = async (info)=>{
+    const mappedInfo = await info.map(async (e)=>{
         const user = await User.findByPk(e.UserId);
         return {
             id: e?.dataValues?.id,
@@ -38,10 +35,18 @@ const getReviews = async ()=>{
     return promises;
 }
 
+const getReviews = async ()=>{
+
+    const aux = await Review.findAll();
+    const response = await infoCleanerDb(aux);
+    return response;
+}
+
 const getUserReviewsById = async (id)=>{
     if (!id) throw new Error(`Invalid or missing ID.`);
     else{
-        const response = await axios.get(`${URL_BASE}reviews/`).then((data)=>data.data);
+        const aux = await Review.findAll({where: {UserId: id}});
+        const response = await infoCleanerDb(aux);
         return response;
     }
 }
@@ -52,15 +57,19 @@ const getUserReviews = async (mail)=>{
         const user = await User.findOne({where: {mail}});
         if (!user) throw new Error(`No user was found with that Email.`);
 
-        const response = await Review.findAll({where: {UserId: user.id}});
-        if (!response) throw new Error(`No review was found for that User.`);
-
+        const aux = await Review.findAll({where: {UserId: user.id}});
+        if (!aux) throw new Error(`No review was found for that User.`);
+        const response = await infoCleanerDb(aux);
         return response;
     }
 }
 const getPokemonReviews = async (id)=>{
-    const response = await Review.findAll({where: {PokemonId: id}});
-    return response;
+    const aux = await Review.findAll({where: {PokemonId: id}});
+    if (!aux) throw new Error(`No pokemon was found with that ID in our DataBase.`);
+    else{
+        const response = await infoCleanerDb(aux);
+        return response;
+    }
 }
 
 const deleteReview = async (id)=>{
