@@ -5,16 +5,31 @@ const axios = require(`axios`);
 const createReview = async (mail, poke, score)=>{
     if (!mail || !poke || !score) throw new Error(`Some inputs are wrong or missing.`);
     else{
-        const auxUser = await User.findOne({where: {mail}});
-        if (!mail) throw new Error(`Invalid User Email.`);
-        
-        const pokemon = await Pokemon.findByPk(poke);
-        if (!pokemon) throw new Error(`Invalid pokemon ID.`);
+        try {
+            const auxUser = await User.findOne({where: {mail}});
+            if (!mail) throw new Error(`Invalid User Email.`);
+            
+            const pokemon = await Pokemon.findByPk(poke);
+            if (!pokemon) throw new Error(`Invalid pokemon ID.`);
+            const aux = await Review.findOne({where: {
+                UserId: auxUser?.dataValues?.id,
+                PokemonId: pokemon?.dataValues?.id,
+            }}).catch(()=>{});
 
-        const response = await Review.create({score});
-        await response.setUser(auxUser);
-        await response.setPokemon(pokemon);
-        return response;
+            if (!!aux)
+                throw new Error(`There already exists a review for this pokemon by this user.`);
+            else{
+                const response = await Review.create({score});
+                await response.setUser(auxUser);
+                await response.setPokemon(pokemon);
+                return response;
+            }
+        } catch (error) {
+            if (error.message == `There already exists a review for this pokemon by this user.`) 
+                throw error;
+            else
+                throw new Error(error);
+        }
     }
 }
 
