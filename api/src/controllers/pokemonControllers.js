@@ -148,8 +148,11 @@ const getPokemonById = async (id)=>{
         let pokeDb = false;
         if (pokeAux !== null){
             pokeDb = infoCleanerDb(pokeAux);
-            const prom = await getPokemonReviewsProm(pokeDb.id);
-            pokeDb = {...pokeDb, prom: prom};
+            const reviews = await Review.findOne({where: {PokemonId: pokeDb.id}});
+            if (!!reviews){
+                const prom = await getPokemonReviewsProm(pokeDb.id);
+                pokeDb = {...pokeDb, prom: prom};
+            }
         }
         return pokeDb;
     }else{

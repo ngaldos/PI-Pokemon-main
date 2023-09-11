@@ -96,7 +96,7 @@ const Detail = ()=>{
                     {isNaN(id) && <button className='X--btn' onClick={handleDelete}>X</button>}
                     <img src={detail?.img} alt='IMG' className={style.img}/>
                     <h2 className={style.subtitle}>ID: {detail?.id}</h2>
-                    <h3 className={style.subtitle}>Score: {detail.prom}</h3>
+                    {detail?.prom && <h3 className={style.subtitle}>Score: {detail.prom}</h3>}
                     <h2 className={style.subtitle}>Name: {detail?.name}</h2>
                     <h3 className={style.subtitle}>Health: {detail?.health}</h3>
                     <h3 className={style.subtitle}>Attack: {detail?.attack}</h3>
