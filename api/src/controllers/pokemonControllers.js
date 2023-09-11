@@ -1,6 +1,9 @@
 const {Pokemon, Type, Review} = require('../db');
 const axios = require('axios');
 //const { ULR_BASE } = Process.env;
+const URL_BASE = "http://localhost:3001/";
+
+const {getPokemonReviewsProm} = require(`./reviewsControllers`);
 
 const createPokemonDB = async (name, img, health, attack, defense, speed, weight, height, types)=>{
     const pokeDb= await Pokemon.findOne({where: {name: name}});
@@ -144,9 +147,10 @@ const getPokemonById = async (id)=>{
 
         let pokeDb = false;
         if (pokeAux !== null){
-            pokeDb = infoCleanerDb(pokeAux)
+            pokeDb = infoCleanerDb(pokeAux);
+            const prom = await getPokemonReviewsProm(pokeDb.id);
+            pokeDb = {...pokeDb, prom: prom};
         }
-
         return pokeDb;
     }else{
         const pokemonApi = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`).then((data)=>infoCleaner(data.data));

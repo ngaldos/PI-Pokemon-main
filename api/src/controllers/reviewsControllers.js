@@ -110,7 +110,7 @@ const getPokemonReviewsProm = async (id)=>{
     if (!aux || aux?.length == 0) throw new Error(`No pokemon review was found with that ID in our DataBase.`);
     else{
         const response = prom(aux);
-        return {score: response};
+        return response;
     }
 }
 

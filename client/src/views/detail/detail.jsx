@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { addReview, getDetail } from '../../redux/actions';
 
@@ -61,7 +61,9 @@ const Detail = ()=>{
             });
             setScore(1);
             setError('');
+            dispatch(getDetail(id));
             alert(`Review created successfully.`);
+            dispatch(getDetail(id));
         } catch (error) {
             console.log(error);
             alert(error.message);
@@ -94,6 +96,7 @@ const Detail = ()=>{
                     {isNaN(id) && <button className='X--btn' onClick={handleDelete}>X</button>}
                     <img src={detail?.img} alt='IMG' className={style.img}/>
                     <h2 className={style.subtitle}>ID: {detail?.id}</h2>
+                    <h3 className={style.subtitle}>Score: {detail.prom}</h3>
                     <h2 className={style.subtitle}>Name: {detail?.name}</h2>
                     <h3 className={style.subtitle}>Health: {detail?.health}</h3>
                     <h3 className={style.subtitle}>Attack: {detail?.attack}</h3>
@@ -109,7 +112,8 @@ const Detail = ()=>{
                         {detail?.types?.map((e)=><p className={style.subtitle}>{e}</p>)}
                     </div>
                     <>  
-                        {user?.mail && (isNaN(id)) && <div>
+                        {user?.mail && (isNaN(id)) ? 
+                        <div>
                             <form className='form--review' onSubmit={submitHandler}>
                                 <label htmlFor='score' className='label'>Score: </label>
                                 <input className='input' type='number' name='score' onChange={handleChange}></input>
@@ -120,7 +124,9 @@ const Detail = ()=>{
                                     <button className='review--btn' type='submit'>Review Pokemon</button>
                                 </>}
                             </form>
-                        </div>}
+                        </div> : <>
+                                    <h3 className={style.subtitle}>Review this community pokemon by logging.</h3>
+                        </>}
                     </>
                 </div>
             </div>
