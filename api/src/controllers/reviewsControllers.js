@@ -78,7 +78,7 @@ const getUserReviews = async (mail)=>{
         if (!user) throw new Error(`No user was found with that Email.`);
 
         const aux = await Review.findAll({where: {UserId: user.id}});
-        if (!aux) throw new Error(`No review was found for that User.`);
+        if (aux?.length == 0) throw new Error(`No review was found for that User.`);
         const response = await infoCleanerDb(aux);
         return response;
     }

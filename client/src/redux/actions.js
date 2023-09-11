@@ -42,7 +42,6 @@ export const getUserReviews = (mail)=>{
                 });
             }
         } catch (error) {
-            alert(error);
         }
     }
 }
