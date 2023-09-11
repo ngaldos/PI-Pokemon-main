@@ -85,10 +85,32 @@ const getUserReviews = async (mail)=>{
 }
 const getPokemonReviews = async (id)=>{
     const aux = await Review.findAll({where: {PokemonId: id}});
-    if (!aux) throw new Error(`No pokemon was found with that ID in our DataBase.`);
+    if (!aux) throw new Error(`No pokemon review was found with that ID in our DataBase.`);
     else{
         const response = await infoCleanerDb(aux);
         return response;
+    }
+}
+
+const prom = (array)=>{
+    if (array.length > 0){
+        let sum= 0;
+        const aux = array?.forEach((e)=>{
+            sum += e?.dataValues?.score;
+        });
+        const response = sum / array.length;
+        return response;
+    }else 
+        return false;
+}
+
+const getPokemonReviewsProm = async (id)=>{
+
+    const aux = await Review.findAll({where: {PokemonId: id}});
+    if (!aux || aux?.length == 0) throw new Error(`No pokemon review was found with that ID in our DataBase.`);
+    else{
+        const response = prom(aux);
+        return {score: response};
     }
 }
 
@@ -105,5 +127,6 @@ module.exports = {
     getPokemonReviews,
     deleteReview,
     getUserReviewsById,
+    getPokemonReviewsProm,
 
 };
