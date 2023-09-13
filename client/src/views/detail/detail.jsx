@@ -125,7 +125,7 @@ const Detail = ()=>{
                                 </>}
                             </form>
                         </div> : <>
-                                    <h3 className={style.subtitle}>Review this community pokemon by logging.</h3>
+                                    {isNaN(id) && <h3 className={style.subtitle}>Review this community pokemon by logging.</h3>}
                         </>}
                     </>
                 </div>
