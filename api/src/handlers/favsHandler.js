@@ -1,5 +1,4 @@
 const {addFav, getAllFavs, getFavs, deleteFav, getUserFavs} = require('../controllers/favsControllers');
-const axios = require(`axios`);
 
 const addFavHandler = async (req, res)=>{
     const {id, pokeId} = req.body;

@@ -1,4 +1,4 @@
-const {Pokemon, Type, Review} = require('../db');
+const {Pokemon, Type, Review, Fav} = require('../db');
 const axios = require('axios');
 //const { ULR_BASE } = Process.env;
 const URL_BASE = "http://localhost:3001/";
@@ -70,6 +70,12 @@ const createPokemonDB = async (name, img, health, attack, defense, speed, weight
 const deletePokemon = async (id)=>{
     if (!id) throw new Error(`Invalid or missing ID.`);
     const aux = await Review.findAll({where: {PokemonId : id}}).then((data)=> data.map((e)=>e.destroy()));
+    const aux2 = await Fav.findAll({where: {PokemonId : id}}).then((data)=> {
+        if (data?.length > 0){
+            data.forEach((e)=>e.destroy())
+        }
+    
+    });
     const response = await Pokemon.findByPk(id);
     if (response !== null){
         response.destroy();

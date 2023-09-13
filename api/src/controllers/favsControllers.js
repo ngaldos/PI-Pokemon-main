@@ -15,13 +15,12 @@ const addFav = async (id, pokeId)=>{
     const existingFav = await Fav.findOne({where: {UserId: id, PokemonId: pokeId}}).catch(()=>{});
     
     if (existingFav) throw new Error(`This favorite already exists for this user and pokemon.`);
-    const response = await Fav.create();
-    await response.setUser(user);
-    await response.setPokemon(pokemon);
-    console.log(`FINAL`);
-
-    return response;
-    
+    else{
+        const response = await Fav.create();
+        await response.setUser(user);
+        await response.setPokemon(pokemon);
+        return response;
+    }
 }
 
 const getAllFavs = async () =>{
