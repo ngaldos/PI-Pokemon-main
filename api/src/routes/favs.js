@@ -1,6 +1,6 @@
 const {Router} = require('express');
 const {addFavHandler,
-     //getUserFavsHandler,
+     getUserFavsHandler,
       deleteFavHandler,
       getFavsHandler,
 
@@ -10,7 +10,7 @@ const router = Router();
 
 router.post('/', addFavHandler);
 router.get(`/`, getFavsHandler);
-//router.get('/:id', getUserFavsHandler);
+router.get('/:id', getUserFavsHandler);
 router.delete('/', deleteFavHandler);
 
 module.exports = router;

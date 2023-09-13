@@ -164,4 +164,4 @@ const getPokemonById = async (id)=>{
 
 
 
-module.exports= {createPokemonDB, getPokemonById, getPokemons, getPokemonByName, deletePokemon};
+module.exports= {createPokemonDB, getPokemonById, getPokemons, getPokemonByName, deletePokemon, infoCleanerDb};

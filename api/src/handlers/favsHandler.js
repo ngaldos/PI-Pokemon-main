@@ -1,4 +1,4 @@
-const {addFav, getAllFavs, getFavs, deleteFav} = require('../controllers/favsControllers');
+const {addFav, getAllFavs, getFavs, deleteFav, getUserFavs} = require('../controllers/favsControllers');
 const axios = require(`axios`);
 
 const addFavHandler = async (req, res)=>{
@@ -16,7 +16,7 @@ const addFavHandler = async (req, res)=>{
 
 const getFavsHandler = async (req, res)=>{
     try {
-        const {mail} = req.body;
+        const {mail} = req.query;
         if (!mail){
             const response = await getAllFavs();
             res.status(200).json(response);
@@ -26,6 +26,17 @@ const getFavsHandler = async (req, res)=>{
         }
     } catch (error) {
         res.status(500).send(error.message);   
+    }
+}
+
+const getUserFavsHandler = async (req, res)=>{
+    const {id} = req.params;
+    if (!id) res.status(400).send(`Invalid or missing Id.`);
+    try {
+        const response = await getUserFavs(id);
+        res.status(200).json(response);
+    } catch (error) {
+        res.status(500).send(error.message);
     }
 }
 
@@ -46,7 +57,7 @@ const deleteFavHandler = async (req, res)=>{
 module.exports = {
     addFavHandler,
     getFavsHandler,
-    //getUserFavsHandler,
+    getUserFavsHandler,
     deleteFavHandler,
 
 };
